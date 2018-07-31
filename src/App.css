@@ -1,7 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:700&text=NürnBurger');
+
+html, body, .root {
+  font-family: 'Raleway', sans-sans-serif;
+  height: 100%
+}
+
 .App {
   text-align: left;
 }
-
+.header {
+  color: #fff;
+  background-color: #282B31;
+  position: fixed;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+.header h1 {
+  margin: 0.7rem;
+}
 /* Default Create-react-app styles
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
