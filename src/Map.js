@@ -37,6 +37,7 @@ class Map extends Component {
       zoom: 13.5,
       mapTypeControl: false
     });
+    this.props.onMarkersUpdate(map)
   }
 
   render() {
