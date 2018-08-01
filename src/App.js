@@ -8,6 +8,17 @@ class App extends Component {
       markers: []
     }
 
+    fetchFoursquarePlaces() {
+      fetch('https://api.foursquare.com/v2/venues/explore?ll=49.452102,11.076665&query=burgers&limit=10&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson)
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    }
+
   updateMarkers = (map) => {
     // markers variable to create markers.
     let markers = []
@@ -48,6 +59,10 @@ class App extends Component {
       bounds.extend(this.state.markers[i].position);
     }
     map.fitBounds(bounds);
+  }
+
+  componentDidMount() {
+    this.fetchFoursquarePlaces()
   }
 
   /*showMarkers() {
