@@ -6,7 +6,7 @@ import Map from './Map.js'
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div id="App">
         <Header />
         <Map />
       </div>
