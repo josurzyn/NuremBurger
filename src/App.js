@@ -16,10 +16,12 @@ class App extends Component {
     }
 
     setMap = (map) => {
+      console.log('I, setMap')
       this.setState({ map })
     }
 
     fetchFoursquareVenues = () => {
+      console.log('I, fetchFoursquareVenues')
       // Fetch recommended venues for 'burgers' from Foursquare
       fetch('https://api.foursquare.com/v2/venues/explore?ll=49.452102,11.076665&query=burgers&limit=10&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
@@ -56,6 +58,7 @@ class App extends Component {
     }
 
   updateMarkers(locations) {
+    console.log('I, updateMarkers')
     // markers variable to create markers.
     let markers = []
     /* using hard coded locations to test markers set up
@@ -101,6 +104,7 @@ class App extends Component {
 
   // Add event listeners to markers
   addMarkerClick = () => {
+    console.log('I, addMarkerClick')
     this.setState((prevState) => {
       for (let i = 0; i < prevState.markers.length; i++) {
         prevState.markers[i].addListener('click', () => {
@@ -112,12 +116,13 @@ class App extends Component {
 
   // Open info for burger place on click
   populateInfo = (marker) => {
+    console.log('I, populateInfo')
     let info = {}
-    console.log(marker)
+    //console.log(marker)
     fetch('https://api.foursquare.com/v2/venues/' + marker.id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson)
+      //console.log(responseJson)
       if (responseJson.meta.code === 200) {
         const venue = responseJson.response.venue
         if (venue.name) {
@@ -151,22 +156,30 @@ class App extends Component {
         if (venue.bestPhoto) {
           info.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
         }
+      } else {
+        console.log('sorry, foursquare did not like that', responseJson.meta.code)
       }
       this.setState({ selectedMarker: info })
       this.setState({ showPlace: true })
     })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
   openList = () => {
+    console.log('I, openList')
     console.log(`I'ma open the list now`)
     this.setState({ showList: true })
   }
 
   closeList = () => {
+    console.log('I, closeList')
     this.setState({ showList: false })
   }
 
   closeInfo = () => {
+    console.log('I, closeInfo')
     this.setState({ showPlace: false })
   }
 

@@ -4,9 +4,9 @@ class ListView extends Component {
   render() {
     return (
       <div className="list-view">
-        <button onClick={this.props.handleListOpen}>List view</button>
+        <button className="list-view-btn" onClick={this.props.handleListOpen}>List view</button>
         {this.props.listVisible && (
-          <div className="list-view">
+          <div className="list-open-view">
             <button className="close-list-view" onClick={this.props.handleListClose}></button>
             <ul>
               {this.props.markers.map((marker) => (

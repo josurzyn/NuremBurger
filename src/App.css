@@ -36,6 +36,8 @@ address {
 .list-view {
   background-color: #282B31;
   color: #fff;
+  display: flex;
+  flex-wrap: wrap;
 }
 .close-list-view,
 .close-place-info {
@@ -46,6 +48,31 @@ address {
   background-image: url('./imgs/iconmonstr-x-mark-4.svg');
   background-position: center;
   background-repeat: no-repeat;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+button {
+  font-size: 100%;
+  font-family: inherit;
+  border: 0;
+  padding: 0.1rem;
+  background-color: inherit;
+  color: inherit;
+}
+button:hover {
+  cursor: pointer;
+}
+.list-view-btn {
+  width: 100%;
+  align: center;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #fff;
+}
+svg {
+  filter: brightness(200);
 }
 /* Default Create-react-app styles
 .App-logo {

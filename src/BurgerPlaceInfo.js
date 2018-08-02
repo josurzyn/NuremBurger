@@ -4,7 +4,7 @@ class BurgerPlaceInfo extends Component {
 
   render() {
     const { burgerPlace } = this.props
-    console.log(burgerPlace)
+    //console.log(burgerPlace)
 
     return(
 
