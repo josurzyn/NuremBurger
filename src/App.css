@@ -37,7 +37,8 @@ address {
   background-color: #282B31;
   color: #fff;
 }
-.close-list-view {
+.close-list-view,
+.close-place-info {
   align: right;
   display: block;
   width: 60px;

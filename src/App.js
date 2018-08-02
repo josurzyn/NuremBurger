@@ -11,7 +11,8 @@ class App extends Component {
       markers: [],
       map: null,
       selectedMarker: [],
-      showList: false
+      showList: false,
+      showPlace: false
     }
 
     setMap = (map) => {
@@ -152,6 +153,7 @@ class App extends Component {
         }
       }
       this.setState({ selectedMarker: info })
+      this.setState({ showPlace: true })
     })
   }
 
@@ -162,6 +164,10 @@ class App extends Component {
 
   closeList = () => {
     this.setState({ showList: false })
+  }
+
+  closeInfo = () => {
+    this.setState({ showPlace: false })
   }
 
   testFoo = (marker) => {
@@ -186,6 +192,8 @@ class App extends Component {
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
+          handleInfoClose={this.closeInfo}
+          showPlace={this.state.showPlace}
         />
       </div>
     );
