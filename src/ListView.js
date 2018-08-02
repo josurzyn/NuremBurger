@@ -4,14 +4,19 @@ class ListView extends Component {
   render() {
     return (
       <div className="list-view">
-        <h3>List view</h3>
-        <ul>
-          {this.props.markers.map((marker) => (
-            <li key={marker.id} className="marker-list-item">
-              <p onClick={() => this.props.handleClick(marker)}>{marker.title}</p>
-            </li>
-          ))}
-        </ul>
+        <button onClick={this.props.handleListOpen}>List view</button>
+        {this.props.listVisible && (
+          <div className="list-view">
+            <button className="close-list-view" onClick={this.props.handleListClose}></button>
+            <ul>
+              {this.props.markers.map((marker) => (
+                <li key={marker.id} className="marker-list-item">
+                  <button onClick={() => this.props.handleItemClick(marker)}>{marker.title}</button>
+                </li>
+              ))}
+            </ul>
+        </div>
+        )}
       </div>
     )
   }

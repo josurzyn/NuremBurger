@@ -10,7 +10,8 @@ class App extends Component {
       locations: [],
       markers: [],
       map: null,
-      selectedMarker: []
+      selectedMarker: [],
+      showList: false
     }
 
     setMap = (map) => {
@@ -154,6 +155,15 @@ class App extends Component {
     })
   }
 
+  openList = () => {
+    console.log(`I'ma open the list now`)
+    this.setState({ showList: true })
+  }
+
+  closeList = () => {
+    this.setState({ showList: false })
+  }
+
   testFoo = (marker) => {
     console.log('bar', marker)
   }
@@ -169,7 +179,10 @@ class App extends Component {
         />
         <ListView
           markers={this.state.markers}
-          handleClick={this.populateInfo}
+          handleListOpen={this.openList}
+          handleListClose={this.closeList}
+          handleItemClick={this.populateInfo}
+          listVisible={this.state.showList}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
