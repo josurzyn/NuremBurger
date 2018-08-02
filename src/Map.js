@@ -37,7 +37,10 @@ class Map extends Component {
       zoom: 13.5,
       mapTypeControl: false
     });
-    this.props.onMarkersUpdate(map)
+    this.props.setMap(map)
+    console.log('calling setMap')
+    this.props.fetchLocations()
+    console.log('fetching locations')
   }
 
   render() {
