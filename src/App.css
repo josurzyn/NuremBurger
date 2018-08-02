@@ -33,6 +33,10 @@ html, body, #root, #App {
 address {
   font-style: normal;
 }
+.list-view {
+  background-color: #282B31;
+  color: #fff;
+}
 /* Default Create-react-app styles
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

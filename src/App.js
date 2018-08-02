@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Header.js'
 import Map from './Map.js'
 import BurgerPlaceInfo from './BurgerPlaceInfo.js'
+import ListView from './ListView.js'
 
 class App extends Component {
   state = {
@@ -162,6 +163,9 @@ class App extends Component {
           markers={this.state.markers}
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
+        />
+        <ListView
+          markers={this.state.markers}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
