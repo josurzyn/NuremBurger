@@ -8,7 +8,8 @@ class App extends Component {
   state = {
       locations: [],
       markers: [],
-      map: null
+      map: null,
+      selectedMarker: []
     }
 
     setMap = (map) => {
@@ -77,7 +78,6 @@ class App extends Component {
         map: this.state.map
       });
       // create onclick event to open infowindow at marker
-      console.log(marker, i)
     //  marker.addListener('click', () =>
     //    this.populateInfo(this.state.markers[i])
     //  );
@@ -114,6 +114,7 @@ class App extends Component {
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson)
+      this.setState({ selectedMarker: responseJson.response.venue })
     })
   }
 
@@ -127,7 +128,9 @@ class App extends Component {
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
         />
-        <BurgerPlaceInfo />
+        <BurgerPlaceInfo
+          burgerPlace={this.state.selectedMarker}
+        />
       </div>
     );
   }

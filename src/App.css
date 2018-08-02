@@ -29,7 +29,6 @@ html, body, #root, #App {
   margin: 9;
 }
 .burger-place-info {
-  display: none;
 }
 /* Default Create-react-app styles
 .App-logo {
