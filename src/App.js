@@ -109,12 +109,47 @@ class App extends Component {
 
   // Open info for burger place on click
   populateInfo = (marker) => {
+    let info = {}
     console.log(marker)
     fetch('https://api.foursquare.com/v2/venues/' + marker.id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson)
-      this.setState({ selectedMarker: responseJson.response.venue })
+      if (responseJson.meta.code === 200) {
+        const venue = responseJson.response.venue
+        if (venue.name) {
+          info.name = venue.name
+        }
+        if (venue.url) {
+          info.url = venue.url
+        }
+        if (venue.price && venue.price.tier) {
+          let price = '';
+          for (let i = 0; i < venue.price.tier; i++) {
+            price += '€'
+          }
+          info.price = price
+        }
+        if (venue.contact && venue.contact.formattedPhone) {
+          info.phone = venue.contact.formattedPhone
+        }
+        if (venue.hours && venue.hours.isOpen) {
+          info.isOpen = venue.hours.isOpen
+        }
+        if (venue.hours && venue.hours.status) {
+          info.openStatus = venue.hours.status
+        }
+        if (venue.location && venue.location.address) {
+          info.address = venue.location.address
+        }
+        if (venue.rating) {
+          info.rating = venue.rating
+        }
+        if (venue.bestPhoto) {
+          info.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
+        }
+      }
+      this.setState({ selectedMarker: info })
     })
   }
 

@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
 
 class BurgerPlaceInfo extends Component {
+
   render() {
     const { burgerPlace } = this.props
+    console.log(burgerPlace)
 
     return(
       <div className="burger-place-info">
-        <h2>This is a burger space</h2>
-        <h3>{burgerPlace.name}</h3>
-        <p>{burgerPlace.url}</p>
+        <address>
+          <h3>{burgerPlace.name}</h3>
+          <a href={burgerPlace.url}>{burgerPlace.url}</a>
+          <p>{burgerPlace.phone}</p>
+          <p>{burgerPlace.address}</p>
+        </address>
+        <p>{burgerPlace.price}</p>
+        <p>{burgerPlace.rating}/10</p>
+        <img src={burgerPlace.photo} alt={burgerPlace.name}/>
+
       </div>
     )
   }

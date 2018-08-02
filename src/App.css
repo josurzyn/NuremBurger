@@ -30,6 +30,9 @@ html, body, #root, #App {
 }
 .burger-place-info {
 }
+address {
+  font-style: normal;
+}
 /* Default Create-react-app styles
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
