@@ -5,14 +5,41 @@ import Map from './Map.js'
 
 class App extends Component {
   state = {
+      locations: [],
       markers: []
     }
 
-    fetchFoursquarePlaces() {
+    fetchFoursquareVenues() {
+      // Fetch recommended venues for 'burgers' from Foursquare
       fetch('https://api.foursquare.com/v2/venues/explore?ll=49.452102,11.076665&query=burgers&limit=10&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson)
+        // Get list of venues from response
+        var venues = responseJson.response.groups[0].items
+        console.log(venues)
+        var locations = []
+        // Pull relevant venue information and create location from response
+        for (var i = 0; i < venues.length; i++) {
+          const name = venues[i].venue.name;
+          const id = venues[i].venue.id;
+          const address = venues[i].venue.location.address;
+          const lat = venues[i].venue.location.lat;
+          const lng = venues[i].venue.location.lng;
+
+          const location = {
+            name: name,
+            id: id,
+            address: address,
+            location: {
+              lat: lat,
+              lng: lng
+            }
+          }
+
+          locations.push(location);
+        }
+        this.setState({ locations: locations })
+        console.log(this.state.locations)
       })
       .catch((error) => {
         console.error(error);
@@ -62,7 +89,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetchFoursquarePlaces()
+    this.fetchFoursquareVenues()
   }
 
   /*showMarkers() {
