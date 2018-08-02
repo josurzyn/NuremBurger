@@ -154,6 +154,9 @@ class App extends Component {
     })
   }
 
+  testFoo = (marker) => {
+    console.log('bar', marker)
+  }
 
   render() {
     return (
@@ -166,6 +169,7 @@ class App extends Component {
         />
         <ListView
           markers={this.state.markers}
+          handleClick={this.populateInfo}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}

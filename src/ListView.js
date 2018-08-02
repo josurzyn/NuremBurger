@@ -8,7 +8,7 @@ class ListView extends Component {
         <ul>
           {this.props.markers.map((marker) => (
             <li key={marker.id} className="marker-list-item">
-              <p>{marker.title}</p>
+              <p onClick={() => this.props.handleClick(marker)}>{marker.title}</p>
             </li>
           ))}
         </ul>
