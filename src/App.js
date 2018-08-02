@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header.js'
 import Map from './Map.js'
+import BurgerPlaceInfo from './BurgerPlaceInfo.js'
 
 class App extends Component {
   state = {
@@ -15,14 +16,12 @@ class App extends Component {
     }
 
     fetchFoursquareVenues = () => {
-      console.log('putting request to foursquare')
       // Fetch recommended venues for 'burgers' from Foursquare
       fetch('https://api.foursquare.com/v2/venues/explore?ll=49.452102,11.076665&query=burgers&limit=10&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
         // Get list of venues from response
         var venues = responseJson.response.groups[0].items
-        console.log(venues)
         var locations = []
         // Pull relevant venue information and create location from response
         for (var i = 0; i < venues.length; i++) {
@@ -31,7 +30,7 @@ class App extends Component {
           const address = venues[i].venue.location.address;
           const lat = venues[i].venue.location.lat;
           const lng = venues[i].venue.location.lng;
-          console.log('creating locations')
+
           const location = {
             name: name,
             id: id,
@@ -44,10 +43,8 @@ class App extends Component {
 
           locations.push(location);
         }
-        console.log('locations created', locations)
         // set location state with new locations from foursquare
         this.setState({ locations: locations }, () => {this.updateMarkers(this.state.locations)})
-        console.log(this.state.locations)
       })
       .catch((error) => {
         console.error(error);
@@ -55,7 +52,6 @@ class App extends Component {
     }
 
   updateMarkers(locations) {
-    console.log('hello, trying to update markers now with ', this.state.locations, locations)
     // markers variable to create markers.
     let markers = []
     /* using hard coded locations to test markers set up
@@ -69,52 +65,58 @@ class App extends Component {
     ];*/
     for (var i = 0; i < locations.length; i++) {
       //get position from location array
-      console.log('trying to make marker for location ', i, locations[i])
       var position = locations[i].location;
       var title = locations[i].name;
+      var id = locations[i].id;
       // create marker per location and add to markers array
       var marker = new window.google.maps.Marker({
         position: position,
         title: title,
         animation: window.google.maps.Animation.DROP,
-        id: i,
+        id: id,
         map: this.state.map
       });
-      console.log(marker)
+      // create onclick event to open infowindow at marker
+      console.log(marker, i)
+    //  marker.addListener('click', () =>
+    //    this.populateInfo(this.state.markers[i])
+    //  );
       // push marker to array
       markers.push(marker);
-      console.log('markers in loop', markers)
-      // create onclick event to open infowindow at marker
-      //marker.addListener('click', function() {
-      //  populateInfoWindow(this, largeInfoWindow);
-      //});
     }
-    console.log('markers out loop', markers)
     // set markers state
-    this.setState({ markers: markers }, () => console.log('state markers', this.state.markers))
+    this.setState({ markers: markers }, () => this.addMarkerClick())
     //let bounds = new window.google.maps.LatLngBounds();
     //console.log('bounds ', bounds)
     // extend map boundaries for each marker and display marker
-    for (let i = 0; i < this.state.markers.length; i++) {
-      this.state.markers[i].setMap(this.state.map);
+  //  for (let i = 0; i < this.state.markers.length; i++) {
+    //  this.state.markers[i].setMap(this.state.map);
       //bounds.extend(this.state.markers[i].position);
-    }
+    //}
     //this.state.map.fitBounds(bounds);
   }
 
-  /*componentDidMount() {
-    this.fetchFoursquareVenues()
-  }*/
+  // Add event listeners to markers
+  addMarkerClick = () => {
+    this.setState((prevState) => {
+      for (let i = 0; i < prevState.markers.length; i++) {
+        prevState.markers[i].addListener('click', () => {
+          this.populateInfo(prevState.markers[i])
+        })
+      }
+    })
+  }
 
-  /*showMarkers() {
-    let bounds = new window.google.maps.LatLngBounds();
-    // extend map boundaries for each marker and display marker
-    for (let i = 0; i < this.state.markers.length; i++) {
-      this.state.markers[i].setMap(map);
-      bounds.extend(this.state.markers[i].position);
-    }
-    map.fitBounds(bounds);
-  }*/
+  // Open info for burger place on click
+  populateInfo = (marker) => {
+    console.log(marker)
+    fetch('https://api.foursquare.com/v2/venues/' + marker.id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson)
+    })
+  }
+
 
   render() {
     return (
@@ -125,6 +127,7 @@ class App extends Component {
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
         />
+        <BurgerPlaceInfo />
       </div>
     );
   }

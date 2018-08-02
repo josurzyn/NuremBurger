@@ -28,6 +28,9 @@ html, body, #root, #App {
   padding: 0;
   margin: 9;
 }
+.burger-place-info {
+  display: none;
+}
 /* Default Create-react-app styles
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

@@ -37,8 +37,10 @@ class Map extends Component {
       zoom: 13.5,
       mapTypeControl: false
     });
+    // make map available throughout app
     this.props.setMap(map)
     console.log('calling setMap')
+    // fetch burger places from foursquare
     this.props.fetchLocations()
     console.log('fetching locations')
   }
