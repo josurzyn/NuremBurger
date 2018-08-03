@@ -13,7 +13,8 @@ class ListView extends Component {
           <div className="list-open-view">
             <button className="close-list-view" onClick={this.props.handleListClose}></button>
             <ul className="-list">
-              {this.props.markers.map((marker) => (
+              {this.props.markers.filter(marker => marker.map != null)
+                .map((marker) => (
                 <li key={marker.id} className="marker-list-item">
                   <button onClick={() => this.props.handleItemClick(marker)}>{marker.title}</button>
                 </li>
@@ -24,6 +25,8 @@ class ListView extends Component {
         {this.props.showFilters && (
           <Filter
             handleFiltersClose={this.props.hideFilters}
+            hideMarkers={this.props.hideMarkers}
+            showMarkers={this.props.showMarkers}
           />
         )}
       </div>

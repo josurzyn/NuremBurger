@@ -7,7 +7,7 @@ import ListView from './ListView.js'
 
 class App extends Component {
   state = {
-      locations: [],
+      //locations: [],
       markers: [],
       map: null,
       selectedMarker: [],
@@ -29,7 +29,40 @@ class App extends Component {
       .then((responseJson) => {
         // Get list of venues from response
         var venues = responseJson.response.groups[0].items
-        var locations = []
+        console.log(venues)
+        let markers = []
+        for (let i = 0; i < venues.length; i++) {
+          //get position from location array
+          //var position = venues[i].venue.location;
+          var title = venues[i].name;
+          var id = venues[i].venue.id;
+          const address = venues[i].venue.location.address;
+          const lat = venues[i].venue.location.lat;
+          const lng = venues[i].venue.location.lng;
+          const position = {
+            lat: lat,
+            lng: lng
+            }
+
+          // create marker per location and add to markers array
+          var marker = new window.google.maps.Marker({
+            position: position,
+            title: title,
+            animation: window.google.maps.Animation.DROP,
+            id: id,
+            map: this.state.map
+          });
+          // create onclick event to open infowindow at marker
+        //  marker.addListener('click', () =>
+        //    this.populateInfo(this.state.markers[i])
+        //  );
+          // push marker to array
+          markers.push(marker)
+        }
+        // set markers state
+        this.setState({ markers: markers }, () => this.addMarkerClick())
+      })
+        /*var locations = []
         // Pull relevant venue information and create location from response
         for (var i = 0; i < venues.length; i++) {
           const name = venues[i].venue.name;
@@ -55,7 +88,7 @@ class App extends Component {
       })
       .catch((error) => {
         console.error(error);
-      })
+      })*/
     }
 
   updateMarkers(locations) {
@@ -165,10 +198,30 @@ class App extends Component {
       this.setState({ selectedMarker: info })
       this.openInfo()
       this.closeList()
+      this.hideFilters()
     })
     .catch((error) => {
       console.log(error)
     })
+  }
+
+  // Hide all markers
+  hideMarkers = () => {
+    for (let i = 0; i < this.state.markers.length; i++) {
+      this.setState((prevState) => {
+        this.state.markers[i].setMap(null)
+      })
+    }
+    console.log(this.state.markers)
+  }
+
+  // Show all markers
+  showMarkers = () => {
+    for (let i = 0; i < this.state.markers.length; i++) {
+      this.setState((prevState) => {
+        this.state.markers[i].setMap(this.state.map)
+      })
+    }
   }
 
   openList = () => {
@@ -228,6 +281,8 @@ class App extends Component {
           handleFiltersOpen={this.openFilters}
           showFilters={this.state.showFilters}
           hideFilters={this.hideFilters}
+          hideMarkers={this.hideMarkers}
+          showMarkers={this.showMarkers}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
