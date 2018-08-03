@@ -140,6 +140,8 @@ class App extends Component {
         }
         if (venue.contact && venue.contact.formattedPhone) {
           info.phone = venue.contact.formattedPhone
+        } else {
+          info.phone = 'No phone number provided'
         }
         if (venue.hours && venue.hours.isOpen) {
           info.isOpen = venue.hours.isOpen
@@ -161,6 +163,7 @@ class App extends Component {
       }
       this.setState({ selectedMarker: info })
       this.setState({ showPlace: true })
+      this.setState({ showList: false })
     })
     .catch((error) => {
       console.log(error)
@@ -171,6 +174,7 @@ class App extends Component {
     console.log('I, openList')
     console.log(`I'ma open the list now`)
     this.setState({ showList: true })
+    this.closeInfo()
   }
 
   closeList = () => {

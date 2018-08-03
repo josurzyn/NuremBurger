@@ -28,16 +28,12 @@ html, body, #root, #App {
   padding: 0;
   margin: 9;
 }
-.burger-place-info {
-}
-address {
-  font-style: normal;
-}
 .list-view {
   background-color: #282B31;
   color: #fff;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 .close-list-view,
 .close-place-info {
@@ -51,7 +47,7 @@ address {
 }
 ul {
   list-style: none;
-  padding: 0;
+  width: 100%;
 }
 button {
   font-size: 100%;
@@ -64,15 +60,70 @@ button {
 button:hover {
   cursor: pointer;
 }
-.list-view-btn {
+.list-buttons {
+  display: flex;
   width: 100%;
-  align: center;
-  margin: 5px;
-  padding: 5px;
+  justify-content: space-around;
+}
+.list-view-btn,
+.filter-btn {
+  margin: 8px auto;
+  padding: 5px 10px;
   border: 1px solid #fff;
 }
-svg {
-  filter: brightness(200);
+.list-open-view {
+  width: 100%;
+  display: flex;
+}
+.list {
+  order: 1;
+  padding: 1rem;
+}
+.close-list-view {
+  order: 2;
+  padding: 0 3rem;
+}
+.burger-place-info {
+  width: 100%;
+}
+address {
+  font-style: normal;
+  padding: 0.6rem 1rem 0;
+}
+p {
+  margin: 0.2rem;
+}
+h3 {
+  margin: 0.2rem;
+}
+.place-address {
+  flex-basis: 75%;
+}
+.info-open {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+}
+.close-place-info {
+  order: 2;
+}
+.place-details {
+  order: 1;
+  flex-grow: 2;
+}
+.rating {
+  order: 3;
+  flex-basis: 100%;
+  padding: 0 1rem;
+}
+.price {
+  order: 4;
+  padding: 0 1rem;
+}
+.place-best-img {
+  order: 5;
+  flex-basis: 100%;
 }
 /* Default Create-react-app styles
 .App-logo {
