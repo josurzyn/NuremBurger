@@ -7,7 +7,7 @@ import ListView from './ListView.js'
 
 class App extends Component {
   state = {
-      //locations: [],
+      locations: [],
       markers: [],
       map: null,
       selectedMarker: [],
@@ -30,39 +30,7 @@ class App extends Component {
         // Get list of venues from response
         var venues = responseJson.response.groups[0].items
         console.log(venues)
-        let markers = []
-        for (let i = 0; i < venues.length; i++) {
-          //get position from location array
-          //var position = venues[i].venue.location;
-          var title = venues[i].name;
-          var id = venues[i].venue.id;
-          const address = venues[i].venue.location.address;
-          const lat = venues[i].venue.location.lat;
-          const lng = venues[i].venue.location.lng;
-          const position = {
-            lat: lat,
-            lng: lng
-            }
-
-          // create marker per location and add to markers array
-          var marker = new window.google.maps.Marker({
-            position: position,
-            title: title,
-            animation: window.google.maps.Animation.DROP,
-            id: id,
-            map: this.state.map
-          });
-          // create onclick event to open infowindow at marker
-        //  marker.addListener('click', () =>
-        //    this.populateInfo(this.state.markers[i])
-        //  );
-          // push marker to array
-          markers.push(marker)
-        }
-        // set markers state
-        this.setState({ markers: markers }, () => this.addMarkerClick())
-      })
-        /*var locations = []
+        var locations = []
         // Pull relevant venue information and create location from response
         for (var i = 0; i < venues.length; i++) {
           const name = venues[i].venue.name;
@@ -88,7 +56,7 @@ class App extends Component {
       })
       .catch((error) => {
         console.error(error);
-      })*/
+      })
     }
 
   updateMarkers(locations) {
@@ -146,6 +114,73 @@ class App extends Component {
         })
       }
     })
+    this.populateLocationsInfo()
+  }
+
+  //populate location info TODO: Not currently working - just changing locations to hans im gluck url
+  populateLocationsInfo = () => {
+    console.log('I, populateLocationsInfo', this.state.locations)
+    const locationsInfo = []
+    for (let i = 0; i < this.state.locations.length; i++) {
+      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.meta.code === 200) {
+          const venue = responseJson.response.venue
+          console.log('this venue is ', venue, this.state.locations[i])
+          let location = {}
+          console.log('the initial location is ', location)
+          if (venue.id) {
+            location.id = venue.id
+          }
+          if (venue.name) {
+            location.name = venue.name
+          }
+          if (venue.url) {
+            location.url = venue.url
+          } else {
+            location.url = null
+          }
+          if (venue.price && venue.price.tier) {
+            let price = '';
+            for (let i = 0; i < venue.price.tier; i++) {
+              price += '€'
+            }
+            location.price = price
+          }
+          if (venue.contact && venue.contact.formattedPhone) {
+            location.phone = venue.contact.formattedPhone
+          } else {
+            location.phone = 'No phone number provided'
+          }
+          if (venue.hours && venue.hours.isOpen) {
+            location.isOpen = venue.hours.isOpen
+          }
+          if (venue.hours && venue.hours.status) {
+            location.openStatus = venue.hours.status
+          }
+          if (venue.location && venue.location.address) {
+            location.address = venue.location.address
+          }
+          if (venue.rating) {
+            location.rating = venue.rating
+          }
+          if (venue.bestPhoto) {
+            location.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
+          } else {
+          console.log('sorry, foursquare did not like that', responseJson.meta.code)
+          }
+
+          locationsInfo.push(location)
+        }
+        // inside then, inside loop
+        //info.url = url
+      })
+    }
+    var array = this.state.locations.concat(locationsInfo)
+    console.log('concat array is ', array)
+    console.log('array post loop', locationsInfo)
+    this.setState({ locations: locationsInfo })
   }
 
   // Open info for burger place on click
@@ -230,6 +265,7 @@ class App extends Component {
     this.setState({ showList: true })
     this.closeInfo()
     this.hideFilters()
+    console.log('locations after open list ', this.state.locations)
   }
 
   closeList = () => {
