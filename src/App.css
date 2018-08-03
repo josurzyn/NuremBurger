@@ -36,7 +36,8 @@ html, body, #root, #App {
   width: 100%;
 }
 .close-list-view,
-.close-place-info {
+.close-place-info,
+.hide-filters {
   align: right;
   display: block;
   width: 60px;

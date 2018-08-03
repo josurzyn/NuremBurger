@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Filter from './Filter.js'
 
 class ListView extends Component {
   render() {
@@ -6,7 +7,7 @@ class ListView extends Component {
       <div className="list-view">
         <div className="list-buttons">
           <button className="list-view-btn" onClick={this.props.handleListOpen}>List view</button>
-          <button className="filter-btn">Filter Results</button>
+          <button className="filter-btn" onClick={this.props.handleFiltersOpen}>Filter Results</button>
         </div>
         {this.props.listVisible && (
           <div className="list-open-view">
@@ -19,6 +20,11 @@ class ListView extends Component {
               ))}
             </ul>
         </div>
+        )}
+        {this.props.showFilters && (
+          <Filter
+            handleFiltersClose={this.props.hideFilters}
+          />
         )}
       </div>
     )

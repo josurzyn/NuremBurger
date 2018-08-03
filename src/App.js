@@ -12,7 +12,8 @@ class App extends Component {
       map: null,
       selectedMarker: [],
       showList: false,
-      showPlace: false
+      showPlace: false,
+      showFilters: false
     }
 
     setMap = (map) => {
@@ -162,8 +163,8 @@ class App extends Component {
         console.log('sorry, foursquare did not like that', responseJson.meta.code)
       }
       this.setState({ selectedMarker: info })
-      this.setState({ showPlace: true })
-      this.setState({ showList: false })
+      this.openInfo()
+      this.closeList()
     })
     .catch((error) => {
       console.log(error)
@@ -175,6 +176,7 @@ class App extends Component {
     console.log(`I'ma open the list now`)
     this.setState({ showList: true })
     this.closeInfo()
+    this.hideFilters()
   }
 
   closeList = () => {
@@ -182,9 +184,26 @@ class App extends Component {
     this.setState({ showList: false })
   }
 
+  openInfo = () => {
+    console.log('I, openList')
+    this.setState({ showPlace: true })
+  }
+
   closeInfo = () => {
     console.log('I, closeInfo')
     this.setState({ showPlace: false })
+  }
+
+  openFilters = () => {
+    console.log('I, openFilters')
+    this.setState({ showFilters: true })
+    this.closeList()
+    this.closeInfo()
+  }
+
+  hideFilters = () => {
+    console.log('I, hideFilters')
+    this.setState({ showFilters: false })
   }
 
   testFoo = (marker) => {
@@ -206,6 +225,9 @@ class App extends Component {
           handleListClose={this.closeList}
           handleItemClick={this.populateInfo}
           listVisible={this.state.showList}
+          handleFiltersOpen={this.openFilters}
+          showFilters={this.state.showFilters}
+          hideFilters={this.hideFilters}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
