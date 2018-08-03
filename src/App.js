@@ -153,10 +153,20 @@ class App extends Component {
     //    this.populateInfo(this.state.markers[i])
     //  );
       // push marker to array
+      // Add bounce to marker on click - with help from Google API docs
+      // and a tip from Mikael on Stack Overflow -
+      // https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once/7832086
       markers.push(marker);
+      marker.addListener('click', () => {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null)
+        } else {
+          marker.setAnimation(4)
+        }
+      })
     }
     // set markers state
-    this.setState({ markers: markers }, () => this.addMarkerClick())
+    this.setState({ markers: markers }/*, () => this.addMarkerClick()*/)
     //let bounds = new window.google.maps.LatLngBounds();
     //console.log('bounds ', bounds)
     // extend map boundaries for each marker and display marker
@@ -166,6 +176,14 @@ class App extends Component {
     //}
     //this.state.map.fitBounds(bounds);
   }
+
+  /*markerBounce = () => {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null)
+    } else {
+      marker.setAnimation(window.google.maps.Animation.BOUNCE)
+    }
+  }*/
 
   // Add event listeners to markers
   addMarkerClick = () => {
