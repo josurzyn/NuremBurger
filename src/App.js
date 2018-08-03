@@ -59,8 +59,71 @@ class App extends Component {
       })
     }
 
-  updateMarkers(locations) {
-    console.log('I, updateMarkers')
+    //populate location info TODO: Not currently working - just changing locations to hans im gluck url
+    /*populateLocationsInfo = () => {
+      console.log('I, populateLocationsInfo', this.state.locations)
+      const locationsInfo = []
+      for (let i = 0; i < this.state.locations.length; i++) {
+        fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.meta.code === 200) {
+            const venue = responseJson.response.venue
+            console.log('this venue is ', venue, this.state.locations[i])
+            let location = {}
+            console.log('the initial location is ', location)
+            if (venue.id) {
+              location.id = venue.id
+            }
+            if (venue.name) {
+              location.name = venue.name
+            }
+            if (venue.url) {
+              location.url = venue.url
+            } else {
+              location.url = null
+            }
+            if (venue.price && venue.price.tier) {
+              let price = '';
+              for (let i = 0; i < venue.price.tier; i++) {
+                price += '€'
+              }
+              location.price = price
+            }
+            if (venue.contact && venue.contact.formattedPhone) {
+              location.phone = venue.contact.formattedPhone
+            } else {
+              location.phone = 'No phone number provided'
+            }
+            if (venue.hours && venue.hours.isOpen) {
+              location.isOpen = venue.hours.isOpen
+            }
+            if (venue.hours && venue.hours.status) {
+              location.openStatus = venue.hours.status
+            }
+            if (venue.location && venue.location.address) {
+              location.address = venue.location.address
+            }
+            if (venue.rating) {
+              location.rating = venue.rating
+            }
+            if (venue.bestPhoto) {
+              location.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
+            } else {
+            console.log('sorry, foursquare did not like that', responseJson.meta.code)
+            }
+
+            locationsInfo.push(location)
+            return locationsInfo
+          }
+          // inside then, inside loop
+        })
+      }
+      this.setState({ locations: locationsInfo }, () => {this.updateMarkers(this.state.locations)})
+    }*/
+
+  updateMarkers = (locations) => {
+    console.log('I, updateMarkers', this.state.locations)
     // markers variable to create markers.
     let markers = []
     /* using hard coded locations to test markers set up
@@ -110,81 +173,23 @@ class App extends Component {
     this.setState((prevState) => {
       for (let i = 0; i < prevState.markers.length; i++) {
         prevState.markers[i].addListener('click', () => {
-          this.populateInfo(prevState.markers[i])
+          this.selectLocation(prevState.markers[i])
         })
       }
     })
-    this.populateLocationsInfo()
   }
 
-  //populate location info TODO: Not currently working - just changing locations to hans im gluck url
-  populateLocationsInfo = () => {
-    console.log('I, populateLocationsInfo', this.state.locations)
-    const locationsInfo = []
-    for (let i = 0; i < this.state.locations.length; i++) {
-      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.meta.code === 200) {
-          const venue = responseJson.response.venue
-          console.log('this venue is ', venue, this.state.locations[i])
-          let location = {}
-          console.log('the initial location is ', location)
-          if (venue.id) {
-            location.id = venue.id
-          }
-          if (venue.name) {
-            location.name = venue.name
-          }
-          if (venue.url) {
-            location.url = venue.url
-          } else {
-            location.url = null
-          }
-          if (venue.price && venue.price.tier) {
-            let price = '';
-            for (let i = 0; i < venue.price.tier; i++) {
-              price += '€'
-            }
-            location.price = price
-          }
-          if (venue.contact && venue.contact.formattedPhone) {
-            location.phone = venue.contact.formattedPhone
-          } else {
-            location.phone = 'No phone number provided'
-          }
-          if (venue.hours && venue.hours.isOpen) {
-            location.isOpen = venue.hours.isOpen
-          }
-          if (venue.hours && venue.hours.status) {
-            location.openStatus = venue.hours.status
-          }
-          if (venue.location && venue.location.address) {
-            location.address = venue.location.address
-          }
-          if (venue.rating) {
-            location.rating = venue.rating
-          }
-          if (venue.bestPhoto) {
-            location.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
-          } else {
-          console.log('sorry, foursquare did not like that', responseJson.meta.code)
-          }
-
-          locationsInfo.push(location)
-        }
-        // inside then, inside loop
-        //info.url = url
-      })
-    }
-    var array = this.state.locations.concat(locationsInfo)
-    console.log('concat array is ', array)
-    console.log('array post loop', locationsInfo)
-    this.setState({ locations: locationsInfo })
+  selectLocation = (location) => {
+    this.setState({ selectedMarker: location })
+    this.openInfo()
+    this.closeList()
+    this.hideFilters()
   }
+
+
 
   // Open info for burger place on click
-  populateInfo = (marker) => {
+  /*populateInfo = (marker) => {
     console.log('I, populateInfo')
     let info = {}
     //console.log(marker)
@@ -238,7 +243,7 @@ class App extends Component {
     .catch((error) => {
       console.log(error)
     })
-  }
+  }*/
 
   // Hide all markers
   hideMarkers = () => {
