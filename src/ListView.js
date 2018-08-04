@@ -27,6 +27,7 @@ class ListView extends Component {
             handleFiltersClose={this.props.hideFilters}
             hideMarkers={this.props.hideMarkers}
             showMarkers={this.props.showMarkers}
+            filterByOpenNow={this.props.filterByOpenNow}
           />
         )}
       </div>

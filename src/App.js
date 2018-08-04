@@ -74,9 +74,10 @@ class App extends Component {
         .then((responseJson) => {
           if (responseJson.meta.code === 200) {
             const venue = responseJson.response.venue
-            console.log('this venue is ', venue, this.state.locations[i])
+            console.log('I just fetched some venue details')
+            //console.log('this venue is ', venue, this.state.locations[i])
             let location = {}
-            console.log('the initial location is ', location)
+            //console.log('the initial location is ', location)
             if (venue.id) {
               location.id = venue.id
             }
@@ -111,8 +112,8 @@ class App extends Component {
             }
             if (venue.location && venue.location.lat && venue.location.lng) {
               location.location = {
-                lat: venue.lat,
-                lng: venue.lng
+                lat: venue.location.lat,
+                lng: venue.location.lng
               }
             }
             if (venue.rating) {
@@ -201,7 +202,7 @@ class App extends Component {
     this.setState((prevState) => {
       for (let i = 0; i < prevState.markers.length; i++) {
         prevState.markers[i].addListener('click', () => {
-          this.selectLocation(prevState.markers[i])
+        this.selectLocation(prevState.markers[i])
         })
       }
     })
@@ -209,11 +210,18 @@ class App extends Component {
 
   selectLocation = (marker) => {
     const selectedLocation = this.state.locations.find(loc => marker.id === loc.id)
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null)
+    } else {
+      marker.setAnimation(4)
+    }
     console.log('selected location is ', selectedLocation)
-    this.setState({ selectedMarker: selectedLocation })
-    this.openInfo()
-    this.closeList()
-    this.hideFilters()
+    setTimeout(() => {
+      this.setState({ selectedMarker: selectedLocation })
+      this.openInfo()
+      this.closeList()
+      this.hideFilters()
+    }, 1000)
   }
 
 
@@ -336,6 +344,22 @@ class App extends Component {
     this.setState({ showFilters: false })
   }
 
+  // Filter markers by whether they're currently open
+  filterByOpenNow = () => {
+    const currentMarkers = this.state.markers
+    console.log('this is current markers', currentMarkers)
+    const locs = this.state.locations
+    console.log('this is loc ', locs)
+    for (let i = 0; i < currentMarkers.length; i++) {
+      const loc = locs.find(l => l.id === currentMarkers[i].id)
+      console.log('this is loc (single)', loc)
+      if (!loc.isOpen || loc.isOpen !== true) {
+        currentMarkers[i].setMap(null)
+      }
+    }
+    this.setState({ markers: currentMarkers })
+  }
+
   testFoo = (marker) => {
     console.log('bar', marker)
   }
@@ -360,6 +384,7 @@ class App extends Component {
           hideFilters={this.hideFilters}
           hideMarkers={this.hideMarkers}
           showMarkers={this.showMarkers}
+          filterByOpenNow={this.filterByOpenNow}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
