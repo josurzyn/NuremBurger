@@ -25,7 +25,7 @@ class Map extends Component {
   componentDidMount() {
     window.initMap = this.initMap
     // Call async loading of Google Maps API, passing in key and libraries
-    this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCxe0yQBOOR2yc0ktudoL5BDpsRKrOq4X8&libraries=places&v=3&callback=initMap')
+    this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCxe0yQBOOR2yc0ktudoL5BDpsRKrOq4X8&v=3&callback=initMap')
   }
 
   // Initialise the map

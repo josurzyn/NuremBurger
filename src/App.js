@@ -16,6 +16,10 @@ class App extends Component {
       showFilters: false
     }
 
+    componentDidMount() {
+      console.log('app did mount')
+    }
+
     setMap = (map) => {
       console.log('I, setMap')
       this.setState({ map })
@@ -48,19 +52,20 @@ class App extends Component {
               lng: lng
             }
           }
-
+          // Add location to temp array
           locations.push(location);
         }
-        // set location state with new locations from foursquare
+        // Set location state with new locations array built from Foursquare
         this.setState({ locations: locations }, () => {this.updateMarkers(this.state.locations)})
       })
+      // Catch errors
       .catch((error) => {
         console.error(error);
       })
     }
 
-    //populate location info TODO: Not currently working - just changing locations to hans im gluck url
-    /*populateLocationsInfo = () => {
+    //populate location info TODO: Not currently working
+    populateLocationsInfo = () => {
       console.log('I, populateLocationsInfo', this.state.locations)
       const locationsInfo = []
       for (let i = 0; i < this.state.locations.length; i++) {
@@ -104,6 +109,12 @@ class App extends Component {
             if (venue.location && venue.location.address) {
               location.address = venue.location.address
             }
+            if (venue.location && venue.location.lat && venue.location.lng) {
+              location.location = {
+                lat: venue.lat,
+                lng: venue.lng
+              }
+            }
             if (venue.rating) {
               location.rating = venue.rating
             }
@@ -114,27 +125,24 @@ class App extends Component {
             }
 
             locationsInfo.push(location)
-            return locationsInfo
           }
           // inside then, inside loop
         })
-      }
-      this.setState({ locations: locationsInfo }, () => {this.updateMarkers(this.state.locations)})
-    }*/
+      } // end of loop
+      this.updateLocationsInfo(locationsInfo)
+    }
 
+    updateLocationsInfo = (locationsInfo) => {
+        this.setState({ locations: locationsInfo }, () => {this.addMarkerClick()})
+        console.log('new func locationsInfo is ', locationsInfo, 'state is ', this.state.locations)
+    }
+
+  // Add makers to the map using initial locations state built from Foursquare
   updateMarkers = (locations) => {
     console.log('I, updateMarkers', this.state.locations)
-    // markers variable to create markers.
+    // Temp markers array to hold created markers
     let markers = []
-    /* using hard coded locations to test markers set up
-      var locations = [
-      {title: 'Burg', location: {lat: 49.457883, lng: 11.075846}},
-      {title: 'Hauptmarkt', location: {lat: 49.454162, lng: 11.07724}},
-      {title: 'Lorenzer Platz', location: {lat: 49.451039, lng: 11.079391}},
-      {title: 'Sebaldler Platz', location: {lat: 49.455504, lng: 11.076302}},
-      {title: 'Kultur Garten', location: {lat: 49.449223, lng: 11.08234}},
-      {title: 'St Katharine', location: {lat: 49.451128, lng: 11.082441}}
-    ];*/
+    // Loop through locations to get and set data for each marker
     for (var i = 0; i < locations.length; i++) {
       //get position from location array
       var position = locations[i].location;
@@ -157,25 +165,27 @@ class App extends Component {
       // and a tip from Mikael on Stack Overflow -
       // https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once/7832086
       markers.push(marker);
-      marker.addListener('click', () => {
+      /*marker.addListener('click', () => {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null)
         } else {
           marker.setAnimation(4)
         }
-      })
+      })*/
     }
-    // set markers state
-    this.setState({ markers: markers }/*, () => this.addMarkerClick()*/)
-    //let bounds = new window.google.maps.LatLngBounds();
-    //console.log('bounds ', bounds)
-    // extend map boundaries for each marker and display marker
-  //  for (let i = 0; i < this.state.markers.length; i++) {
-    //  this.state.markers[i].setMap(this.state.map);
-      //bounds.extend(this.state.markers[i].position);
-    //}
-    //this.state.map.fitBounds(bounds);
+    // Set markers state from temp markers array
+    this.setState({ markers: markers }, () => this.populateLocationsInfo())
   }
+  // TODO: code block originally from maps lessons -
+  // sets bounds of map based on markers
+  //let bounds = new window.google.maps.LatLngBounds();
+  //console.log('bounds ', bounds)
+  // extend map boundaries for each marker and display marker
+//  for (let i = 0; i < this.state.markers.length; i++) {
+  //  this.state.markers[i].setMap(this.state.map);
+    //bounds.extend(this.state.markers[i].position);
+  //}
+  //this.state.map.fitBounds(bounds);
 
   /*markerBounce = () => {
     if (marker.getAnimation() !== null) {
@@ -197,8 +207,10 @@ class App extends Component {
     })
   }
 
-  selectLocation = (location) => {
-    this.setState({ selectedMarker: location })
+  selectLocation = (marker) => {
+    const selectedLocation = this.state.locations.find(loc => marker.id === loc.id)
+    console.log('selected location is ', selectedLocation)
+    this.setState({ selectedMarker: selectedLocation })
     this.openInfo()
     this.closeList()
     this.hideFilters()
@@ -282,30 +294,35 @@ class App extends Component {
     }
   }
 
+  // Open list view that will populate from markers state
+  // and close any other open views
   openList = () => {
     console.log('I, openList')
-    console.log(`I'ma open the list now`)
     this.setState({ showList: true })
     this.closeInfo()
     this.hideFilters()
     console.log('locations after open list ', this.state.locations)
   }
 
+  // Close list view
   closeList = () => {
     console.log('I, closeList')
     this.setState({ showList: false })
   }
 
+  // Open info for selected location
   openInfo = () => {
     console.log('I, openList')
     this.setState({ showPlace: true })
   }
 
+  // Close info for selected location
   closeInfo = () => {
     console.log('I, closeInfo')
     this.setState({ showPlace: false })
   }
 
+  // Open filters and close other open views
   openFilters = () => {
     console.log('I, openFilters')
     this.setState({ showFilters: true })
@@ -313,6 +330,7 @@ class App extends Component {
     this.closeInfo()
   }
 
+  // Hide filters
   hideFilters = () => {
     console.log('I, hideFilters')
     this.setState({ showFilters: false })
@@ -335,7 +353,7 @@ class App extends Component {
           markers={this.state.markers}
           handleListOpen={this.openList}
           handleListClose={this.closeList}
-          handleItemClick={this.populateInfo}
+          handleItemClick={this.selectLocation}
           listVisible={this.state.showList}
           handleFiltersOpen={this.openFilters}
           showFilters={this.state.showFilters}
