@@ -18,6 +18,7 @@ class BurgerPlaceInfo extends Component {
               <p>{burgerPlace.phone}</p>
               <p>{burgerPlace.address}</p>
             </address>
+            <p className="open-status">{burgerPlace.openStatus}</p>
             <p className="price">{burgerPlace.price}</p>
             <p className="rating">{burgerPlace.rating}/10</p>
             <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name}/>

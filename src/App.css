@@ -113,17 +113,23 @@ h3 {
   order: 1;
   flex-grow: 2;
 }
-.rating {
+.open-status {
+  font-style: italic;
   order: 3;
+  padding: 0 1rem;
+  color: #5D5E6F;
+}
+.rating {
+  order: 4;
   flex-basis: 100%;
   padding: 0 1rem;
 }
 .price {
-  order: 4;
+  order: 5;
   padding: 0 1rem;
 }
 .place-best-img {
-  order: 5;
+  order: 6;
   flex-basis: 100%;
 }
 /* Default Create-react-app styles
