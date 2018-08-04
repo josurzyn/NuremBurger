@@ -222,10 +222,19 @@ class App extends Component {
       this.openInfo()
       this.closeList()
       this.hideFilters()
-    }, 1000)
+      this.setState((prevState) => {
+        prevState.map.setZoom(17)
+        prevState.map.panTo(marker.getPosition())
+      })
+    }, 500)
   }
 
-
+  recenterMap = () => {
+    this.setState((prevState) => {
+      prevState.map.setZoom(13)
+      prevState.map.setCenter({lat: 49.452102, lng: 11.076665})
+    })
+  }
 
   // Open info for burger place on click
   /*populateInfo = (marker) => {
@@ -325,10 +334,11 @@ class App extends Component {
     this.setState({ showPlace: true })
   }
 
-  // Close info for selected location
+  // Close info for selected location, zoom out and recenter map
   closeInfo = () => {
     console.log('I, closeInfo')
     this.setState({ showPlace: false })
+    this.recenterMap()
   }
 
   // Open filters and close other open views
