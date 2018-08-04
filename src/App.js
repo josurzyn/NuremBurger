@@ -64,7 +64,7 @@ class App extends Component {
       })
     }
 
-    //populate location info TODO: Not currently working
+    //populate location info
     populateLocationsInfo = () => {
       console.log('I, populateLocationsInfo', this.state.locations)
       const locationsInfo = []
@@ -94,6 +94,7 @@ class App extends Component {
               for (let i = 0; i < venue.price.tier; i++) {
                 price += '€'
               }
+              location.priceTier = venue.price.tier
               location.price = price
             }
             if (venue.contact && venue.contact.formattedPhone) {
@@ -355,6 +356,22 @@ class App extends Component {
       console.log('this is loc (single)', loc)
       if (!loc.isOpen || loc.isOpen !== true) {
         currentMarkers[i].setMap(null)
+      } else {
+        currentMarkers[i].setMap(this.state.map)
+      }
+    }
+    this.setState({ markers: currentMarkers })
+  }
+
+  filterByPrice = (value) => {
+    const currentMarkers = this.state.markers
+    const locs = this.state.locations
+    for (let i = 0; i < currentMarkers.length; i++) {
+      const loc = locs.find(l => l.id === currentMarkers[i].id)
+      if (loc.priceTier == value) {
+        currentMarkers[i].setMap(this.state.map)
+      } else {
+        currentMarkers[i].setMap(null)
       }
     }
     this.setState({ markers: currentMarkers })
@@ -385,6 +402,7 @@ class App extends Component {
           hideMarkers={this.hideMarkers}
           showMarkers={this.showMarkers}
           filterByOpenNow={this.filterByOpenNow}
+          filterByPrice={this.filterByPrice}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}

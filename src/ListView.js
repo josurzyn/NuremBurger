@@ -28,6 +28,7 @@ class ListView extends Component {
             hideMarkers={this.props.hideMarkers}
             showMarkers={this.props.showMarkers}
             filterByOpenNow={this.props.filterByOpenNow}
+            filterByPrice={this.props.filterByPrice}
           />
         )}
       </div>

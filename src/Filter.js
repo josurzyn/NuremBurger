@@ -9,6 +9,12 @@ class Filter extends Component {
         <button onClick={this.props.hideMarkers}>Hide all</button>
         <button onClick={this.props.showMarkers}>Show all</button>
         <button onClick={this.props.filterByOpenNow}>Open now</button>
+        <select className="select-price" value="choose" onChange={(event) => this.props.filterByPrice(event.target.value)}>
+          <option value="choose" disabled>Select price...</option>
+          <option value="1">€</option>
+          <option value="2">€€</option>
+          <option value="3">€€€</option>
+        </select>
       </div>
     )
   }
