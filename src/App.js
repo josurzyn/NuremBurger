@@ -348,12 +348,9 @@ class App extends Component {
   // Filter markers by whether they're currently open
   filterByOpenNow = () => {
     const currentMarkers = this.state.markers
-    console.log('this is current markers', currentMarkers)
     const locs = this.state.locations
-    console.log('this is loc ', locs)
     for (let i = 0; i < currentMarkers.length; i++) {
       const loc = locs.find(l => l.id === currentMarkers[i].id)
-      console.log('this is loc (single)', loc)
       if (!loc.isOpen || loc.isOpen !== true) {
         currentMarkers[i].setMap(null)
       } else {
@@ -363,12 +360,26 @@ class App extends Component {
     this.setState({ markers: currentMarkers })
   }
 
-  filterByPrice = (value) => {
+  filterByPrice = (price) => {
     const currentMarkers = this.state.markers
     const locs = this.state.locations
     for (let i = 0; i < currentMarkers.length; i++) {
       const loc = locs.find(l => l.id === currentMarkers[i].id)
-      if (loc.priceTier == value) {
+      if (loc.priceTier == price) {
+        currentMarkers[i].setMap(this.state.map)
+      } else {
+        currentMarkers[i].setMap(null)
+      }
+    }
+    this.setState({ markers: currentMarkers })
+  }
+
+  filterByRating = (rating) => {
+    const currentMarkers = this.state.markers
+    const locs = this.state.locations
+    for (let i = 0; i < currentMarkers.length; i++) {
+      const loc = locs.find(l => l.id === currentMarkers[i].id)
+      if (loc.rating >= rating) {
         currentMarkers[i].setMap(this.state.map)
       } else {
         currentMarkers[i].setMap(null)
@@ -403,6 +414,7 @@ class App extends Component {
           showMarkers={this.showMarkers}
           filterByOpenNow={this.filterByOpenNow}
           filterByPrice={this.filterByPrice}
+          filterByRating={this.filterByRating}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}
