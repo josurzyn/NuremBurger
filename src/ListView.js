@@ -6,12 +6,12 @@ class ListView extends Component {
     return (
       <div className="list-view">
         <div className="list-buttons">
-          <button className="list-view-btn" onClick={this.props.handleListOpen}>List view</button>
-          <button className="filter-btn" onClick={this.props.handleFiltersOpen}>Filter Results</button>
+          <button className="list-view-btn" onClick={this.props.handleListOpen}>List</button>
+          <button className="filter-btn" onClick={this.props.handleFiltersOpen}>Filter</button>
         </div>
         {this.props.listVisible && (
           <div className="list-open-view">
-            <button className="close-list-view" onClick={this.props.handleListClose}></button>
+            <button className="close-btn-light close-list-view" onClick={this.props.handleListClose}></button>
             <ul className="-list">
               {this.props.markers.filter(marker => marker.map != null)
                 .map((marker) => (

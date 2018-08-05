@@ -1,143 +1,55 @@
 new func locationsInfo is
 Array(10)
-0
-:
-id
-:
-"5890c58a5289302f307ffd30"
-location
-:
-{lat: undefined, lng: undefined}
-name
-:
-"Mam-Mam Burger"
-phone
-:
-"No phone number provided"
-photo
-:
-"https://igx.4sqi.net/img/general/height100/14971791_Xw6BkyF1e-LDSTwN_9Anz0e60UJ3pSzv3qBXK9unrjk.jpg"
-price
-:
-"€€"
-rating
-:
-8
-url
-:
-null
-__proto__
-:
-Object
-1
-:
-address
-:
-"Tetzelgasse 21"
-id
-:
-"541d576b498e5af29579e6d7"
-location
-:
-{lat: undefined, lng: undefined}
-name
-:
-"Mam-Mam Burger"
-openStatus
-:
-"Closed until Noon"
-phone
-:
-"+49 911 48980268"
-photo
-:
-"https://igx.4sqi.net/img/general/height100/8526719_uBtiZ9fUCtRplXVn5dnWRKY-QwVi4d0n3HU5oPR7Jd0.jpg"
-price
-:
-"€€"
-rating
-:
-7.2
-url
-:
-"http://www.mammamburger.de"
-__proto__
-:
-Object
-2
-:
-address
-:
-"Gostenhofer Hauptstr. 58"
-id
-:
-"53dbdcf3498e8a2753042033"
-location
-:
-{lat: undefined, lng: undefined}
-name
-:
-"Hempels"
-openStatus
-:
-"Closed until Noon"
-phone
-:
-"+49 1577 9577402"
-photo
-:
-"https://igx.4sqi.net/img/general/height100/43607817_Bkish9Hcq9kFaZ5rg2cK47v8rHieF6lx65EDW350JEc.jpg"
-price
-:
-"€€"
-rating
-:
-8.1
-url
-:
-"http://www.hempelsburger.de"
-__proto__
-:
-Object
-3
-:
-address
-:
-"Hauptmarkt 10"
-id
-:
-"4b530d76f964a520978d27e3"
-isOpen
-:
-true
-location
-:
-{lat: undefined, lng: undefined}
-name
-:
-"ALEX"
-openStatus
-:
-"Open until 3:00 AM"
-phone
-:
-"+49 911 2446980"
-photo
-:
-"https://igx.4sqi.net/img/general/height100/722715_xtKvSZnMGxXWz9hJRpVBnJTN4UBZnf-7KefS8DQX71c.jpg"
-price
-:
-"€€"
-rating
-:
-7.8
-url
-:
-"http://www.dein-alex.de"
-__proto__
-:
-Object
-4
+0[ {
+    "id": "5890c58a5289302f307ffd30",
+    "name": "Mam-Mam Burger",
+    "phone": "No phone number provided",
+    "photo": "https://igx.4sqi.net/img/general/height100/14971791_Xw6BkyF1e-LDSTwN_9Anz0e60UJ3pSzv3qBXK9unrjk.jpg",
+    "price": "€€",
+    "rating": 8,
+    "url": null
+},
+{
+    "address": "Tetzelgasse 21",
+    "id": "541d576b498e5af29579e6d7",
+    "name": "Mam-Mam Burger",
+    "openStatus": "Closed until Noon",
+    "phone": "+49 911 48980268",
+    "photo": "https://igx.4sqi.net/img/general/height100/8526719_uBtiZ9fUCtRplXVn5dnWRKY-QwVi4d0n3HU5oPR7Jd0.jpg",
+    "price": "€€",
+    "rating": 7.2,
+    "url": "http://www.mammamburger.de"
+},{
+    "address": "Gostenhofer Hauptstr. 58",
+    "id": "53dbdcf3498e8a2753042033",
+    "name": "Hempels",
+    "openStatus": "Closed until Noon",
+    "phone": "+49 1577 9577402",
+    "photo": "https://igx.4sqi.net/img/general/height100/43607817_Bkish9Hcq9kFaZ5rg2cK47v8rHieF6lx65EDW350JEc.jpg",
+    "price": "€€",
+    "rating": 8.1,
+    "url": "http://www.hempelsburger.de"
+}, {
+    "address": "Hauptmarkt 10",
+    "id": "4b530d76f964a520978d27e3",
+    "name": "ALEX",
+    "openStatus": "Open until 3:00 AM",
+    "phone": "+49 911 2446980",
+    "photo": "https://igx.4sqi.net/img/general/height100/722715_xtKvSZnMGxXWz9hJRpVBnJTN4UBZnf-7KefS8DQX71c.jpg",
+    "price": "€€",
+    "rating": 7.8,
+    "url": "http://www.dein-alex.de"
+}, {
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -173,6 +85,17 @@ __proto__
 :
 Object
 5
+{
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -208,6 +131,17 @@ __proto__
 :
 Object
 6
+{
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -243,6 +177,17 @@ __proto__
 :
 Object
 7
+{
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -278,6 +223,17 @@ __proto__
 :
 Object
 8
+{
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -316,6 +272,17 @@ __proto__
 :
 Object
 9
+{
+    "address":
+    "id":
+    "location":
+    "name":
+    "phone":
+    "photo":
+    "price": "€€",
+    "rating": ,
+    "url":
+}
 :
 address
 :
@@ -535,4 +502,4 @@ length
 10
 __proto__
 :
-Array(0)
+Array(0) ]

@@ -121,10 +121,10 @@ class App extends Component {
               location.rating = venue.rating
             }
             if (venue.bestPhoto) {
-              location.photo = venue.bestPhoto.prefix + 'height100' + venue.bestPhoto.suffix
+              location.photo = venue.bestPhoto.prefix + 'width300' + venue.bestPhoto.suffix
             } else {
             console.log('sorry, foursquare did not like that', responseJson.meta.code)
-            }
+          }
 
             locationsInfo.push(location)
           }
@@ -226,7 +226,7 @@ class App extends Component {
         prevState.map.setZoom(17)
         prevState.map.panTo(marker.getPosition())
       })
-    }, 500)
+    }, 700)
   }
 
   recenterMap = () => {
