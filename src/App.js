@@ -13,7 +13,16 @@ class App extends Component {
       selectedMarker: [],
       showList: false,
       showPlace: false,
-      showFilters: false
+      showFilters: false,
+      openFilter: false,
+      priceFilter: {
+          applied: false,
+          select: "none"
+        },
+      ratingFilter: {
+          applied: false,
+          select: "none"
+        }
     }
 
     componentDidMount() {
@@ -143,7 +152,7 @@ class App extends Component {
             photo: "https://igx.4sqi.net/img/general/width300/14971791_Xw6BkyF1e-LDSTwN_9Anz0e60UJ3pSzv3qBXK9unrjk.jpg",
             price: "€€",
             priceTier: 2,
-            rating: 8,
+            rating: 4,
             url: null
         }, {
             address: "Tetzelgasse 21",
@@ -188,7 +197,7 @@ class App extends Component {
           photo: "https://igx.4sqi.net/img/general/width300/13476333_Q9gzEI3L5_ldUcsdqTxdKiD1jgckUj4-jPX-vp0VC-s.jpg",
           price: "€€",
           priceTier: 2,
-          rating: 8.9,
+          rating: 9,
           url: "http://www.beckschlager.org"
 
         }, {
@@ -212,7 +221,7 @@ class App extends Component {
           photo: "https://igx.4sqi.net/img/general/width300/2021433_svyv9PIpKLZGxt67RlitN-_7EQk883WRO2HrZWVj2iE.jpg",
           price: "€€",
           priceTier: 2,
-          rating: 8.5,
+          rating: 5,
           url: "http://www.funkybuns.de"
 
         }, {
@@ -237,7 +246,7 @@ class App extends Component {
           photo: "https://igx.4sqi.net/img/general/width300/54674926_3Ra8LoaR4jjC6ccPSRAh1uFxlkPBjijqyGjCmYP-d90.jpg",
           price: "€",
           priceTier: 1,
-          rating: 8,
+          rating: 6,
           url: "http://www.fivediner.de"
 
         }, {
@@ -486,39 +495,75 @@ class App extends Component {
       const loc = locs.find(l => l.id === currentMarkers[i].id)
       if (!loc.isOpen || loc.isOpen !== true) {
         currentMarkers[i].setMap(null)
-      } else {
+      } /*else {
         currentMarkers[i].setMap(this.state.map)
-      }
+      }*/
     }
-    this.setState({ markers: currentMarkers })
+    this.setState(
+      { markers: currentMarkers,
+        openFilter: true }
+    )
+    console.log('open filter state is ', this.state.openFilter)
   }
 
   filterByPrice = (price) => {
     const currentMarkers = this.state.markers
     const locs = this.state.locations
-    for (let i = 0; i < currentMarkers.length; i++) {
-      const loc = locs.find(l => l.id === currentMarkers[i].id)
-      if (loc.priceTier == price) {
-        currentMarkers[i].setMap(this.state.map)
-      } else {
-        currentMarkers[i].setMap(null)
+    if (price === "clear") {
+      this.setState({
+        priceFilter: {
+          applied: false,
+          select: "none"
+        }
+      })
+      this.showMarkers()
+    } else {
+      for (let i = 0; i < currentMarkers.length; i++) {
+        const loc = locs.find(l => l.id === currentMarkers[i].id)
+        if (loc.priceTier != price) {
+          currentMarkers[i].setMap(null)
+        } else {
+          currentMarkers[i].setMap(this.state.map)
+        }
       }
+      this.setState({
+        markers: currentMarkers,
+        priceFilter: {
+          applied: true,
+          select: price
+        }
+      })
     }
-    this.setState({ markers: currentMarkers })
   }
 
   filterByRating = (rating) => {
     const currentMarkers = this.state.markers
     const locs = this.state.locations
-    for (let i = 0; i < currentMarkers.length; i++) {
-      const loc = locs.find(l => l.id === currentMarkers[i].id)
-      if (loc.rating >= rating) {
-        currentMarkers[i].setMap(this.state.map)
-      } else {
-        currentMarkers[i].setMap(null)
+    if (rating === "clear") {
+      this.setState({
+        ratingFilter: {
+          applied: false,
+          select: "none"
+        }
+      })
+      this.showMarkers()
+    } else {
+      for (let i = 0; i < currentMarkers.length; i++) {
+        const loc = locs.find(l => l.id === currentMarkers[i].id)
+        if (loc.rating < rating) {
+          currentMarkers[i].setMap(null)
+        } else {
+          currentMarkers[i].setMap(this.state.map)
+        }
       }
+      this.setState({
+        markers: currentMarkers,
+        ratingFilter: {
+          applied: true,
+          select: rating
+        }
+      })
     }
-    this.setState({ markers: currentMarkers })
   }
 
   testFoo = (marker) => {
@@ -548,6 +593,9 @@ class App extends Component {
           filterByOpenNow={this.filterByOpenNow}
           filterByPrice={this.filterByPrice}
           filterByRating={this.filterByRating}
+          openFilterSelected={this.state.openFilter}
+          priceFilter={this.state.priceFilter}
+          ratingFilter={this.state.ratingFilter}
         />
         <BurgerPlaceInfo
           burgerPlace={this.state.selectedMarker}

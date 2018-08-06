@@ -30,6 +30,9 @@ class ListView extends Component {
             filterByOpenNow={this.props.filterByOpenNow}
             filterByPrice={this.props.filterByPrice}
             filterByRating={this.props.filterByRating}
+            openFilterSelected={this.props.openFilterSelected}
+            priceFilter={this.props.priceFilter}
+            ratingFilter={this.props.ratingFilter}
           />
         )}
       </div>
