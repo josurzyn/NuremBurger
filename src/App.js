@@ -5,6 +5,7 @@ import Map from './Map.js'
 import BurgerPlaceInfo from './BurgerPlaceInfo.js'
 import ListView from './ListView.js'
 import Filter from './Filter.js'
+import Options from './Options.js'
 
 class App extends Component {
   state = {
@@ -581,14 +582,20 @@ class App extends Component {
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
         />
-        <ListView
-          markers={this.state.markers}
+        <Options
           handleListOpen={this.openList}
-          handleListClose={this.closeList}
-          handleItemClick={this.selectLocation}
-          listVisible={this.state.showList}
           handleFiltersOpen={this.openFilters}
         />
+        {this.state.showList &&
+          <ListView
+            markers={this.state.markers}
+            handleListOpen={this.openList}
+            handleListClose={this.closeList}
+            handleItemClick={this.selectLocation}
+            listVisible={this.state.showList}
+            handleFiltersOpen={this.openFilters}
+          />
+        }
         {this.state.showFilters &&
           <Filter
             handleFiltersClose={this.hideFilters}

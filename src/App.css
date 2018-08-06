@@ -74,7 +74,7 @@ select:hover {
 }
 
 /* List Styles */
-.list-view {
+.options {
   background-color: #282B31;
   color: #fff;
   display: flex;
@@ -90,7 +90,7 @@ select:hover {
   background-position: center;
   background-repeat: no-repeat;
 }
-.list-buttons {
+.option-buttons {
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -214,6 +214,31 @@ select:hover {
   font-size: 0.9rem;
   cursor: pointer;
 }
+
+/* Media Queries */
+@media screen and (min-width: 500px) {
+  #App {
+    flex-direction: row;
+  }
+  .header {
+    order: 1;
+    max-height: 100px;
+  }
+  #map {
+    order: 2;
+    flex-basis: 50%;
+  }
+  .options {
+    order: 4;
+  }
+  .list-open-view,
+  .filters,
+  .burger-place-info {
+    order: 3;
+    flex-basis: 25%;
+  }
+}
+
 /* Default Create-react-app styles
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
