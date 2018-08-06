@@ -9,7 +9,7 @@ class Filter extends Component {
           <div className="open-now-filter">
             <button className="filter-button" onClick={this.props.filterByOpenNow}>Open now</button>
             {this.props.openFilterSelected === true &&
-                <button className="remove-filter-btn" onClick={this.props.showMarkers}>Clear selection</button>
+              <button className="remove-filter-btn" onClick={this.props.clearOpenFilter}>Clear</button>
             }
           </div>
           <select className="select-price" value={this.props.priceFilter.select} onChange={(event) => this.props.filterByPrice(event.target.value)}>

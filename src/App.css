@@ -113,8 +113,10 @@ select:hover {
   border-top: 1px solid #000;
   margin: 0;
 }
-.list-h3 {
-  flex-basis: 65%;
+.list-title {
+  flex-basis: 60%;
+  flex-grow: 1;
+  padding: 0 0 0 0.5rem;
 }
 .close-btn-light {
   align: right;
@@ -128,6 +130,9 @@ select:hover {
 .close-list-view {
   order: 1;
   padding: 0 3rem;
+}
+.list-item-btn:hover {
+  outline: 1px solid #000;
 }
 
 /* Buger Place Info Styles */
@@ -158,9 +163,9 @@ select:hover {
 .close-container {
   order: 2;
 }
-.place-details {
-  order: 1;
-  flex-grow: 2;
+.details-container {
+  flex-basis: 60%;
+  flex-grow: 1;
 }
 .open-status {
   font-style: italic;

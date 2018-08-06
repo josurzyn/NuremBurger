@@ -439,11 +439,16 @@ class App extends Component {
 
   // Show all markers
   showMarkers = () => {
-    for (let i = 0; i < this.state.markers.length; i++) {
+    const markers = this.state.markers
+    for (let i = 0; i < markers.length; i++) {
+      markers[i].setMap(this.state.map)
+    }
+    this.setState({ markers: markers })
+    /*for (let i = 0; i < this.state.markers.length; i++) {
       this.setState((prevState) => {
         this.state.markers[i].setMap(this.state.map)
       })
-    }
+    }*/
   }
 
   // Open list view that will populate from markers state
@@ -453,7 +458,6 @@ class App extends Component {
     this.setState({ showList: true })
     this.closeInfo()
     this.hideFilters()
-    console.log('locations after open list ', this.state.locations)
   }
 
   // Close list view
@@ -464,7 +468,7 @@ class App extends Component {
 
   // Open info for selected location
   openInfo = () => {
-    console.log('I, openList')
+    console.log('I, openInfo')
     this.setState({ showPlace: true })
   }
 
@@ -498,7 +502,11 @@ class App extends Component {
       const loc = locs.find(l => l.id === currentMarkers[i].id)
       if (!loc.isOpen || loc.isOpen !== true) {
         currentMarkers[i].setMap(null)
-      } /*else {
+      } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+          currentMarkers[i].setMap(null)
+      } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
+          currentMarkers[i].setMap(null)
+      }/*else {
         currentMarkers[i].setMap(this.state.map)
       }*/
     }
@@ -509,9 +517,28 @@ class App extends Component {
     console.log('open filter state is ', this.state.openFilter)
   }
 
+  // Clear open now filter while leaving any others in place
+  clearOpenFilter = () => {
+    const currentMarkers = this.state.markers
+    const locs = this.state.locations
+    for (let i = 0; i < currentMarkers.length; i++) {
+      const loc = locs.find(l => l.id === currentMarkers[i].id)
+      if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+          currentMarkers[i].setMap(null)
+      } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
+          currentMarkers[i].setMap(null)
+      } else {
+        currentMarkers[i].setMap(this.state.map)
+      }
+    }
+    this.setState({ markers: currentMarkers, openFilter: false })
+  }
+
+  // Filter markers and list by price tier
   filterByPrice = (price) => {
     const currentMarkers = this.state.markers
     const locs = this.state.locations
+    // option to clear the selection and reset filter
     if (price === "clear") {
       this.setState({
         priceFilter: {
@@ -521,14 +548,22 @@ class App extends Component {
       })
       this.showMarkers()
     } else {
+      // Loop through markers and check for match against price tier,
+      //  as well as other currently selected filters and show matches
+      // that satisfy all current filters
       for (let i = 0; i < currentMarkers.length; i++) {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
         if (loc.priceTier != price) {
           currentMarkers[i].setMap(null)
+        } else if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
+            currentMarkers[i].setMap(null)
+        } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
+            currentMarkers[i].setMap(null)
         } else {
           currentMarkers[i].setMap(this.state.map)
         }
       }
+      // Update markers and filter information
       this.setState({
         markers: currentMarkers,
         priceFilter: {
@@ -555,6 +590,10 @@ class App extends Component {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
         if (loc.rating < rating) {
           currentMarkers[i].setMap(null)
+        } else if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
+            currentMarkers[i].setMap(null)
+        } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+            currentMarkers[i].setMap(null)
         } else {
           currentMarkers[i].setMap(this.state.map)
         }
@@ -600,6 +639,7 @@ class App extends Component {
             openFilterSelected={this.state.openFilter}
             priceFilter={this.state.priceFilter}
             ratingFilter={this.state.ratingFilter}
+            clearOpenFilter={this.clearOpenFilter}
           />
         }
         {this.state.showPlace &&
