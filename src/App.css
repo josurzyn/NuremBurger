@@ -92,7 +92,8 @@ select:hover {
   justify-content: space-around;
 }
 .list-view-btn,
-.filter-btn {
+.filter-btn,
+.reset-btn {
   margin: 8px auto;
   padding: 5px 10px;
   border: 1px solid #fff;

@@ -476,7 +476,6 @@ class App extends Component {
   closeInfo = () => {
     console.log('I, closeInfo')
     this.setState({ showPlace: false })
-    this.showMarkers()
     this.recenterMap()
   }
 
@@ -623,6 +622,36 @@ class App extends Component {
     }
   }
 
+  resetMap = () => {
+    if (this.state.showList) {
+    this.closeList()
+    }
+    if (this.state.showFilters) {
+      this.hideFilters()
+    }
+    if (this.state.openFilter) {
+      this.clearOpenFilter()
+    }
+    if (this.state.priceFilter.applied) {
+      this.setState({ priceFilter: {
+        applied: false,
+        select: "none"
+      }})
+    }
+    if (this.state.ratingFilter.applied) {
+      this.setState({ ratingFilter: {
+          applied: false,
+          select: "none"
+        }
+      })
+    }
+    if (this.state.showPlace) {
+      this.closeInfo()
+    }
+    this.showMarkers()
+    this.recenterMap()
+  }
+
   testFoo = (marker) => {
     console.log('bar', marker)
   }
@@ -667,6 +696,7 @@ class App extends Component {
         <Options
           handleListOpen={this.openList}
           handleFiltersOpen={this.openFilters}
+          handleReset={this.resetMap}
         />
 
       </div>
