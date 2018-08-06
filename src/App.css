@@ -46,9 +46,7 @@ select {
   padding: 5px 10px;
   font: inherit;
   font-size: 0.9rem;
-  color: #fff;
-  background-color: #282B31;
-  border: 1px solid #fff;
+  border: 1px solid #000;
 }
 select:hover {
   cursor: pointer;
@@ -62,7 +60,13 @@ select:hover {
   width: 100%;
 }
 .header h1 {
-  margin: 0.7rem;
+  margin: 0.7rem 0.7rem 0;
+  font-size: 1.5rem;
+}
+.powered-by-foursquare {
+  order: 6;
+  max-width: 150px;
+  padding: 0 0.7rem;
 }
 
 /* Map */
@@ -70,10 +74,9 @@ select:hover {
   /*width: 100%;*/
   flex-grow: 1;
   padding: 0;
-  margin: 9;
 }
 
-/* List Styles */
+/* Options Stlyes */
 .options {
   background-color: #282B31;
   color: #fff;
@@ -81,16 +84,9 @@ select:hover {
   flex-wrap: wrap;
   width: 100%;
 }
-.close-btn-light {
-  align: right;
-  display: block;
-  width: 60px;
-  height: 60px;
-  background-image: url('./imgs/iconmonstr-x-mark-7-light.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-}
 .option-buttons {
+  background-color: #282B31;
+  color: #fff;
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -101,16 +97,36 @@ select:hover {
   padding: 5px 10px;
   border: 1px solid #fff;
 }
-.list-open-view {
-  width: 100%;
+
+/* List Styles */
+.list-view {
+  width: 95%;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 1px solid #000;
+  margin: 0.5rem auto;
 }
 .list {
-  order: 1;
+  order: 2;
   padding: 1rem;
+  border-top: 1px solid #000;
+  margin: 0;
+}
+.list-h3 {
+  flex-basis: 65%;
+}
+.close-btn-light {
+  align: right;
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-image: url('./imgs/iconmonstr-x-mark-7-light.svg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .close-list-view {
-  order: 2;
+  order: 1;
   padding: 0 3rem;
 }
 
@@ -123,8 +139,8 @@ select:hover {
 .close-btn-dark {
   align: right;
   display: block;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-image: url('./imgs/iconmonstr-x-mark-7.svg');
   background-position: center;
   background-repeat: no-repeat;
@@ -139,7 +155,7 @@ select:hover {
   width: 100%;
   padding: 0 0 0.5rem;
 }
-.close-place-info {
+.close-container {
   order: 2;
 }
 .place-details {
@@ -168,10 +184,12 @@ select:hover {
   overflow: hidden;
   max-height: 200px;
   border-top: 1px solid #282B31;
+  display: flex;
   /*object-fit: cover;*/
 }
 .place-best-img {
   padding: 0.5rem;
+  margin: auto;
   /*border-bottom: 1px solid #282B31;
   margin: 0 1rem 1rem;
   position: absolute;*/
@@ -179,12 +197,10 @@ select:hover {
 
 /* Filter Menu Styles */
 .filters {
-  color: #fff;
-  background-color: #282B31;
   display: flex;
   flex-wrap: wrap;
   width: 96%;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   margin: 0.5rem auto;
 }
 .filter-options {
@@ -199,7 +215,7 @@ select:hover {
 .filter-button {
   margin: 8px 0 0;
   padding: 5px 10px;
-  border: 1px solid #fff;
+  border: 1px solid #000;
 }
 .open-now-filter {
   display: inline;
@@ -216,10 +232,42 @@ select:hover {
 }
 
 /* Media Queries */
-@media screen and (min-width: 500px) {
-  #App {
-    flex-direction: row;
+@media screen and (min-width: 650px) {
+  .burger-place-info {
+    display: flex;
   }
+  .info-open-img {
+    border-top: none;
+    border-left: 1px solid #000;
+  }
+  .list-view {
+    width: 60%;
+  }
+  .filters {
+    width: 60%;
+  }
+}
+@media screen and (min-width: 850px) and (min-height: 700px) {
+  .list-view {
+    position: absolute;
+    background-color: #fff;
+    bottom: 50px;
+    left: 50px;
+    width: 30%;
+  }
+  .filters {
+    position: absolute;
+    background-color: #fff;
+    bottom: 50px;
+    right: 50px;
+    width: 30%;
+  }
+  .burger-place-info {
+    width: 75%;
+  }
+}
+/*
+@media screen and (min-width: 500px) {
   .header {
     order: 1;
     max-height: 100px;
@@ -228,16 +276,16 @@ select:hover {
     order: 2;
     flex-basis: 50%;
   }
-  .options {
+  .option-buttons {
     order: 4;
   }
-  .list-open-view,
+  .list-view,
   .filters,
   .burger-place-info {
     order: 3;
     flex-basis: 25%;
   }
-}
+}*/
 
 /* Default Create-react-app styles
 .App-logo {

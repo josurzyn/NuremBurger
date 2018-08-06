@@ -32,7 +32,7 @@ class Filter extends Component {
           <button className="filter-button" onClick={this.props.hideMarkers}>Hide all</button>
           </div>
           <div className="filters-close">
-            <button className="close-btn-light close-filter-info" onClick={this.props.handleFiltersClose}></button>
+            <button className="close-btn-dark close-filter-info" onClick={this.props.handleFiltersClose}></button>
           </div>
       </div>
     )

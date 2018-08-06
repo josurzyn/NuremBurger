@@ -582,18 +582,11 @@ class App extends Component {
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
         />
-        <Options
-          handleListOpen={this.openList}
-          handleFiltersOpen={this.openFilters}
-        />
         {this.state.showList &&
           <ListView
             markers={this.state.markers}
-            handleListOpen={this.openList}
             handleListClose={this.closeList}
             handleItemClick={this.selectLocation}
-            listVisible={this.state.showList}
-            handleFiltersOpen={this.openFilters}
           />
         }
         {this.state.showFilters &&
@@ -616,6 +609,11 @@ class App extends Component {
             showPlace={this.state.showPlace}
           />
         }
+        <Options
+          handleListOpen={this.openList}
+          handleFiltersOpen={this.openFilters}
+        />
+
       </div>
     );
   }
