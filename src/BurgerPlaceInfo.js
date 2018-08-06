@@ -9,7 +9,6 @@ class BurgerPlaceInfo extends Component {
     return(
 
       <div className="burger-place-info">
-        {this.props.showPlace && (
           <div className="info-open">
             <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose}></button>
             <address className="place-address">
@@ -25,7 +24,6 @@ class BurgerPlaceInfo extends Component {
               <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name}/>
             </div>
         </div>
-        )}
       </div>
 
     )

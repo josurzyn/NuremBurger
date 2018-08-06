@@ -22,19 +22,6 @@ class ListView extends Component {
             </ul>
         </div>
         )}
-        {this.props.showFilters && (
-          <Filter
-            handleFiltersClose={this.props.hideFilters}
-            hideMarkers={this.props.hideMarkers}
-            showMarkers={this.props.showMarkers}
-            filterByOpenNow={this.props.filterByOpenNow}
-            filterByPrice={this.props.filterByPrice}
-            filterByRating={this.props.filterByRating}
-            openFilterSelected={this.props.openFilterSelected}
-            priceFilter={this.props.priceFilter}
-            ratingFilter={this.props.ratingFilter}
-          />
-        )}
       </div>
     )
   }

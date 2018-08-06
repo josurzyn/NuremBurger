@@ -4,6 +4,7 @@ import Header from './Header.js'
 import Map from './Map.js'
 import BurgerPlaceInfo from './BurgerPlaceInfo.js'
 import ListView from './ListView.js'
+import Filter from './Filter.js'
 
 class App extends Component {
   state = {
@@ -470,6 +471,7 @@ class App extends Component {
   closeInfo = () => {
     console.log('I, closeInfo')
     this.setState({ showPlace: false })
+    this.showMarkers()
     this.recenterMap()
   }
 
@@ -586,22 +588,27 @@ class App extends Component {
           handleItemClick={this.selectLocation}
           listVisible={this.state.showList}
           handleFiltersOpen={this.openFilters}
-          showFilters={this.state.showFilters}
-          hideFilters={this.hideFilters}
-          hideMarkers={this.hideMarkers}
-          showMarkers={this.showMarkers}
-          filterByOpenNow={this.filterByOpenNow}
-          filterByPrice={this.filterByPrice}
-          filterByRating={this.filterByRating}
-          openFilterSelected={this.state.openFilter}
-          priceFilter={this.state.priceFilter}
-          ratingFilter={this.state.ratingFilter}
         />
-        <BurgerPlaceInfo
-          burgerPlace={this.state.selectedMarker}
-          handleInfoClose={this.closeInfo}
-          showPlace={this.state.showPlace}
-        />
+        {this.state.showFilters &&
+          <Filter
+            handleFiltersClose={this.hideFilters}
+            hideMarkers={this.hideMarkers}
+            showMarkers={this.showMarkers}
+            filterByOpenNow={this.filterByOpenNow}
+            filterByPrice={this.filterByPrice}
+            filterByRating={this.filterByRating}
+            openFilterSelected={this.state.openFilter}
+            priceFilter={this.state.priceFilter}
+            ratingFilter={this.state.ratingFilter}
+          />
+        }
+        {this.state.showPlace &&
+          <BurgerPlaceInfo
+            burgerPlace={this.state.selectedMarker}
+            handleInfoClose={this.closeInfo}
+            showPlace={this.state.showPlace}
+          />
+        }
       </div>
     );
   }

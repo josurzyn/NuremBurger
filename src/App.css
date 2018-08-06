@@ -179,6 +179,8 @@ select:hover {
 
 /* Filter Menu Styles */
 .filters {
+  color: #fff;
+  background-color: #282B31;
   display: flex;
   flex-wrap: wrap;
   width: 96%;
