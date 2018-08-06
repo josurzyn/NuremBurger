@@ -506,15 +506,12 @@ class App extends Component {
           currentMarkers[i].setMap(null)
       } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
           currentMarkers[i].setMap(null)
-      }/*else {
-        currentMarkers[i].setMap(this.state.map)
-      }*/
+      }
     }
     this.setState(
       { markers: currentMarkers,
         openFilter: true }
     )
-    console.log('open filter state is ', this.state.openFilter)
   }
 
   // Clear open now filter while leaving any others in place
@@ -546,7 +543,16 @@ class App extends Component {
           select: "none"
         }
       })
-      this.showMarkers()
+      for (let i = 0; i < currentMarkers.length; i++) {
+        const loc = locs.find(l => l.id === currentMarkers[i].id)
+        if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
+            currentMarkers[i].setMap(null)
+        } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
+            currentMarkers[i].setMap(null)
+        } else {
+          currentMarkers[i].setMap(this.state.map)
+        }
+      }
     } else {
       // Loop through markers and check for match against price tier,
       //  as well as other currently selected filters and show matches
@@ -584,7 +590,16 @@ class App extends Component {
           select: "none"
         }
       })
-      this.showMarkers()
+      for (let i = 0; i < currentMarkers.length; i++) {
+        const loc = locs.find(l => l.id === currentMarkers[i].id)
+        if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
+            currentMarkers[i].setMap(null)
+        } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+            currentMarkers[i].setMap(null)
+        } else {
+          currentMarkers[i].setMap(this.state.map)
+        }
+      }
     } else {
       for (let i = 0; i < currentMarkers.length; i++) {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
