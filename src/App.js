@@ -79,7 +79,7 @@ class App extends Component {
     console.log('I, populateLocationsInfo', this.state.locations)
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
-      fetch('https://pi.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
@@ -137,12 +137,18 @@ class App extends Component {
             location.foursquarePage = venue.shortUrl
           }
           locationsInfo.push(location)
+        } else { // catch any status error codes from response
+          if (i === 0 ) {
+            window.alert('Oh no! There was a status error retrieving additional data about our locations - Status Code ' + responseJson.meta.code + ' - For more information visit https://developer.foursquare.com/docs/api/troubleshooting/errors')
+          }
+          this.setState({ showOptions: false })
         }
         // inside then, inside loop
       })
+      // catch errors with request
       .catch((error) => {
         if (i === 0) {
-          window.alert('Oh no! There was a problem loading additional data about our locations - ' + error + '- Try reloading the page, come visit us later, or find your way to one of the markers and see!')
+          window.alert('Oh no! There was a problem loading additional data about our locations - ' + error + ' - Try reloading the page, come visit us later, or find your way to a marker and see!')
           this.setState({ showOptions: false })
         }
       })
