@@ -54,8 +54,9 @@ class Map extends Component {
       <div id="map" role="application" aria-label="Map of burger joints in Nuremburger">
         <p>Loading the map...</p>
         {this.state.mapLoadFailed &&
-          <p>We're having some problems loading the map at this time. Please try refreshing the page, or come back later. We hope you're not too hungry!
-
+          <p>
+            We're having some problems loading the map at this time. Please try refreshing the page,
+            or come back later. We hope you're not too hungry!
           </p>
         }
         </div>

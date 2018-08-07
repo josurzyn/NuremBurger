@@ -16,11 +16,12 @@ class BurgerPlaceInfo extends Component {
             <div className="details-container">
               <address className="place-address">
                 <h3>{burgerPlace.name}</h3>
-                <a href={burgerPlace.url}>{burgerPlace.url}</a>
+                <a href={burgerPlace.url} target="_blank">{burgerPlace.url}</a>
                 <p>{burgerPlace.phone}</p>
                 <p>{burgerPlace.address}</p>
               </address>
               <p className="open-status">{burgerPlace.openStatus}</p>
+              <a href={burgerPlace.foursquarePage} className="foursquare-link" target="_blank" aria-label={"View " + burgerPlace.name + " on Foursquare"}>View on Foursquare</a>
               <p className="price">{burgerPlace.price}</p>
               <p className="rating">{burgerPlace.rating}/10</p>
             </div>

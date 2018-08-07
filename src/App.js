@@ -27,15 +27,6 @@ class App extends Component {
         }
     }
 
-  componentDidMount() {
-    console.log('app did mount')
-    window.addEventListener('resize', this.handleResize())
-  }
-
-  handleResize = () => {
-    this.forceUpdate()
-  }
-
   setMap = (map) => {
     console.log('I, setMap')
     this.setState({ map })
@@ -76,14 +67,14 @@ class App extends Component {
     })
     // Catch errors
     .catch((error) => {
-      window.alert('there was a problem fetching the data:' + error)
+      window.alert('Oh no! There was a problem loading the data for Nuremburger - ' + error + ' - Try reloading the page, or come visit us later.')
       console.error(error);
     })
   }
 
   // Populate additional location info using Foursquare Venue Details API call
   // TODO: Working function commented out to save premium api calls during development
-  /*populateLocationsInfo = () => {
+  populateLocationsInfo = () => {
     console.log('I, populateLocationsInfo', this.state.locations)
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
@@ -92,7 +83,7 @@ class App extends Component {
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
           const venue = responseJson.response.venue
-          console.log('I just fetched some venue details')
+          console.log('I just fetched some venue details', responseJson)
           //console.log('this venue is ', venue, this.state.locations[i])
           let location = {}
           //console.log('the initial location is ', location)
@@ -118,7 +109,7 @@ class App extends Component {
           if (venue.contact && venue.contact.formattedPhone) {
             location.phone = venue.contact.formattedPhone
           } else {
-            location.phone = 'No phone number provided'
+            location.phone = 'No additional details provided'
           }
           if (venue.hours && venue.hours.isOpen) {
             location.isOpen = venue.hours.isOpen
@@ -140,20 +131,24 @@ class App extends Component {
           }
           if (venue.bestPhoto) {
             location.photo = venue.bestPhoto.prefix + 'width300' + venue.bestPhoto.suffix
-          } else {
-          console.log('sorry, foursquare did not like that', responseJson.meta.code)
-        }
-            locationsInfo.push(location)
+          }
+          if (venue.shortUrl) {
+            location.foursquarePage = venue.shortUrl
+          }
+          locationsInfo.push(location)
         }
         // inside then, inside loop
       })
+      .catch((error) => {
+        window.alert('Oh no! There was a problem loading additional data about one of our locations - ' + error + '- Try reloading the page, or visit us later for a juicier experience.')
+      })
     } // end of loop
     this.updateLocationsInfo(locationsInfo)
-  }*/
+  }
 
   // Temporary populate function using hardcoded data to enable easier filter testing
   // and save Foursquare premium API calls
-  populateLocationsInfo = () => {
+  /*populateLocationsInfo = () => {
     const locationsInfo = [
       {
           id: "5890c58a5289302f307ffd30",
@@ -273,7 +268,7 @@ class App extends Component {
         }
       ]
     this.updateLocationsInfo(locationsInfo)
-  }
+  }*/
 
   // Update locations with additional information and set new state,
   // then add onClick to each marker
@@ -467,7 +462,7 @@ class App extends Component {
       if (!loc.isOpen || loc.isOpen !== true) {
         currentMarkers[i].setMap(null)
         // Check for existing price filter and maintain values
-      } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+      } else if (this.state.priceFilter.applied === true && loc.priceTier.toString() !== this.state.priceFilter.select) {
           currentMarkers[i].setMap(null)
           // Check for existing ratings filter and maintain values
       } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
@@ -489,7 +484,7 @@ class App extends Component {
       // Match locations to markers
       const loc = locs.find(l => l.id === currentMarkers[i].id)
       // Check for price filter and maintain values
-      if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+      if (this.state.priceFilter.applied === true && loc.priceTier.toString() !== this.state.priceFilter.select) {
           currentMarkers[i].setMap(null)
           // Check for ratings filter and maintain values
       } else if (this.state.ratingFilter.applied === true && loc.rating < this.state.ratingFilter.select) {
@@ -537,7 +532,7 @@ class App extends Component {
       // that satisfy all current filters
       for (let i = 0; i < currentMarkers.length; i++) {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
-        if (loc.priceTier != price) {
+        if (loc.priceTier.toString() !== price) {
           currentMarkers[i].setMap(null)
           // Check against open filter and maintain values
         } else if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
@@ -579,7 +574,7 @@ class App extends Component {
         if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
             currentMarkers[i].setMap(null)
             // Check against price filter
-        } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+        } else if (this.state.priceFilter.applied === true && loc.priceTier.toString() !== this.state.priceFilter.select) {
             currentMarkers[i].setMap(null)
         } else {
           currentMarkers[i].setMap(this.state.map)
@@ -597,7 +592,7 @@ class App extends Component {
         } else if (this.state.openFilter === true && (!loc.isOpen || loc.isOpen !== true)) {
             currentMarkers[i].setMap(null)
             // Check against price filter and maintain values
-        } else if (this.state.priceFilter.applied === true && loc.priceTier != this.state.priceFilter.select) {
+        } else if (this.state.priceFilter.applied === true && loc.priceTier.toString() !== this.state.priceFilter.select) {
             currentMarkers[i].setMap(null)
         } else {
           currentMarkers[i].setMap(this.state.map)
