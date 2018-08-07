@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 
 class BurgerPlaceInfo extends Component {
+  componentDidMount() {
+    this.infoFocus.focus()
+  }
 
   render() {
     const { burgerPlace } = this.props
-    //console.log(burgerPlace)
 
     return(
 
       <div className="burger-place-info">
           <div className="info-open">
-            <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose} aria-label="Close location information"></button>
+            <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose} aria-label="Close location information" ref={(infoFocus) => { this.infoFocus = infoFocus }}></button>
             <div className="details-container">
               <address className="place-address">
                 <h3>{burgerPlace.name}</h3>

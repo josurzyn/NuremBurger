@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 
 class Filter extends Component {
+  componentDidMount() {
+    this.filterFocus.focus()
+  }
+
   render() {
     return (
       <div className="filters">
         <div className="filter-options">
           <h3>Filter options</h3>
+          <div className="filters-close">
+            <button className="close-btn-dark close-filter-info" onClick={this.props.handleFiltersClose} aria-label="Close filters window" ref={(filterFocus) => { this.filterFocus = filterFocus }}></button>
+          </div>
           <div className="open-now-filter">
             <button className="filter-button" onClick={this.props.filterByOpenNow} aria-label="Filter by open now">Open now</button>
             {this.props.openFilterSelected === true &&
@@ -30,9 +37,6 @@ class Filter extends Component {
           </select>
           <button className="filter-button" onClick={this.props.showMarkers} aria-label="Show all burger joints">Show all</button>
           <button className="filter-button" onClick={this.props.hideMarkers} aria-label="Hide all burger joints">Hide all</button>
-          </div>
-          <div className="filters-close">
-            <button className="close-btn-dark close-filter-info" onClick={this.props.handleFiltersClose} aria-label="Close filters window"></button>
           </div>
       </div>
     )
