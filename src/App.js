@@ -29,6 +29,11 @@ class App extends Component {
 
   componentDidMount() {
     console.log('app did mount')
+    window.addEventListener('resize', this.handleResize())
+  }
+
+  handleResize = () => {
+    this.forceUpdate()
   }
 
   setMap = (map) => {
@@ -71,6 +76,7 @@ class App extends Component {
     })
     // Catch errors
     .catch((error) => {
+      window.alert('there was a problem fetching the data:' + error)
       console.error(error);
     })
   }
@@ -642,7 +648,7 @@ class App extends Component {
 
   render() {
     return (
-      <div id="App">
+      <div id="App" role="main">
         <Header />
         <Map
           markers={this.state.markers}

@@ -9,11 +9,11 @@ class ListView extends Component {
   render() {
     return (
           <div className="list-view">
+            <button className="close-btn-dark close-list-view" onClick={this.props.handleListClose} aria-label="Close list of locations" ref={(listFocus) => {this.listFocus = listFocus}}></button>
             <section className="list-title">
               <h3 className="list-h3">Burger Joints</h3>
               <p>Select a restaurant for more information</p>
             </section>
-            <button className="close-btn-dark close-list-view" onClick={this.props.handleListClose} aria-label="Close list of locations" ref={(listFocus) => {this.listFocus = listFocus}}></button>
             <ul className="list">
               {this.props.markers.filter(marker => marker.map != null)
                 .map((marker) => (

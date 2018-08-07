@@ -26,7 +26,7 @@ class BurgerPlaceInfo extends Component {
             </div>
           </div>
           <div className="info-open-img">
-            <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name + " burger joint"}/>
+            <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name + " burger restaurant"}/>
           </div>
       </div>
 

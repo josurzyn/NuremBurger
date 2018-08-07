@@ -13,7 +13,7 @@ html, body, #root, #App {
   flex-direction: column;
 }
 button {
-  font-size: 100%;
+  font-size: 0.8rem;
   font-family: inherit;
   border: 0;
   padding: 0.1rem;
@@ -33,7 +33,6 @@ address {
 }
 p {
   margin: 0.2rem;
-  font-size: 0.9rem;
 }
 a {
   font-size: 0.9rem;
@@ -61,6 +60,10 @@ select:hover {
   background-color: #282B31;
   margin: 0;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
 }
 .header h1 {
   margin: 0.7rem 0.7rem 0;
@@ -113,11 +116,12 @@ select:hover {
 }
 .list {
   order: 2;
-  padding: 1rem;
+  padding: 0.5rem 0 0.5rem 3rem;
   border-top: 1px solid #000;
   margin: 0;
 }
 .list-title {
+  font-size: 0.9rem;
   flex-basis: 60%;
   flex-grow: 1;
   padding: 0 0 0 0.5rem;
@@ -131,10 +135,6 @@ select:hover {
   background-position: center;
   background-repeat: no-repeat;
 }
-.close-list-view {
-  order: 1;
-  padding: 0 3rem;
-}
 .list-item-btn:hover {
   outline: 1px solid #000;
 }
@@ -144,6 +144,7 @@ select:hover {
   width: 98%;
   margin: 5px auto;
   border: 1px solid #282B31;
+  font-size: 0.8rem;
 }
 .close-btn-dark {
   align: right;
