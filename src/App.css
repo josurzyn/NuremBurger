@@ -51,6 +51,10 @@ select {
 select:hover {
   cursor: pointer;
 }
+:focus {
+  outline: 0.3rem solid #3397db;
+  box-shadow: 0 0 8px 8px #ccc;
+}
 
 /* Header Styles */
 .header {

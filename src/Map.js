@@ -47,7 +47,7 @@ class Map extends Component {
 
   render() {
     return(
-      <div id="map">Map Space</div>
+      <div id="map" role="application" aria-label="Map of burger joints in Nuremburger">Loading the map...</div>
     )
   }
 }

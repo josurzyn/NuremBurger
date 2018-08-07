@@ -10,7 +10,7 @@ class BurgerPlaceInfo extends Component {
 
       <div className="burger-place-info">
           <div className="info-open">
-            <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose}></button>
+            <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose} aria-label="Close location information"></button>
             <div className="details-container">
               <address className="place-address">
                 <h3>{burgerPlace.name}</h3>
@@ -24,7 +24,7 @@ class BurgerPlaceInfo extends Component {
             </div>
           </div>
           <div className="info-open-img">
-            <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name}/>
+            <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name + " burger joint"}/>
           </div>
       </div>
 
