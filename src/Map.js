@@ -19,8 +19,10 @@ class Map extends Component {
       })
       // alert user if there's an error loading the map
       script.addEventListener('error', (e) => {
-        window.alert('There was a problem loading the map:' + e)
-        this.setState({ mapLoadFailed: true })
+        this.setState({
+          mapLoadFailed: true,
+          showOptions: false
+         })
       })
     }
   }

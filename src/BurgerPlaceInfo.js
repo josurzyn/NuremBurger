@@ -16,7 +16,7 @@ class BurgerPlaceInfo extends Component {
             <div className="details-container">
               <address className="place-address">
                 <h3>{burgerPlace.name}</h3>
-                <a href={burgerPlace.url} target="_blank">{burgerPlace.url}></a>
+                <a href={burgerPlace.url} target="_blank">{burgerPlace.url}</a>
                 <p>{burgerPlace.phone}</p>
                 <p>{burgerPlace.address}</p>
               </address>

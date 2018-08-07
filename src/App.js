@@ -24,7 +24,8 @@ class App extends Component {
       ratingFilter: {
           applied: false,
           select: "none"
-        }
+        },
+      showOptions: true
     }
 
   setMap = (map) => {
@@ -78,7 +79,7 @@ class App extends Component {
     console.log('I, populateLocationsInfo', this.state.locations)
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
-      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      fetch('https://pi.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
@@ -140,10 +141,17 @@ class App extends Component {
         // inside then, inside loop
       })
       .catch((error) => {
-        window.alert('Oh no! There was a problem loading additional data about one of our locations - ' + error + '- Try reloading the page, or visit us later for a juicier experience.')
+        if (i === 0) {
+          window.alert('Oh no! There was a problem loading additional data about our locations - ' + error + '- Try reloading the page, come visit us later, or find your way to one of the markers and see!')
+          this.setState({ showOptions: false })
+        }
       })
     } // end of loop
-    this.updateLocationsInfo(locationsInfo)
+    // Check fetching additional data was successful before continuing
+    if (locationsInfo.length) {
+      console.log('there are locations!')
+      this.updateLocationsInfo(locationsInfo)
+    }
   }
 
   // Temporary populate function using hardcoded data to enable easier filter testing
@@ -649,6 +657,7 @@ class App extends Component {
           markers={this.state.markers}
           setMap={this.setMap}
           fetchLocations={this.fetchFoursquareVenues}
+          showOptions={this.state.showOptions}
         />
         {this.state.showList &&
           <ListView
@@ -678,11 +687,13 @@ class App extends Component {
             showPlace={this.state.showPlace}
           />
         }
-        <Options
-          handleListOpen={this.openList}
-          handleFiltersOpen={this.openFilters}
-          handleReset={this.resetMap}
-        />
+        {this.state.showOptions &&
+          <Options
+            handleListOpen={this.openList}
+            handleFiltersOpen={this.openFilters}
+            handleReset={this.resetMap}
+          />
+        }
       </div>
     );
   }
