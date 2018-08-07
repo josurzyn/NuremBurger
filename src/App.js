@@ -67,7 +67,7 @@ class App extends Component {
     })
     // Catch errors
     .catch((error) => {
-      window.alert('Oh no! There was a problem loading the data for Nuremburger - ' + error + ' - Try reloading the page, or come visit us later.')
+      window.alert('Oh no! There was a problem loading the intial data for Nuremburger - ' + error + ' - Try reloading the page, or come visit us later.')
       console.error(error);
     })
   }

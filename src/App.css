@@ -119,6 +119,9 @@ select:hover {
   padding: 0.5rem 0 0.5rem 3rem;
   border-top: 1px solid #000;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 .list-title {
   font-size: 0.9rem;
@@ -126,7 +129,7 @@ select:hover {
   flex-grow: 1;
   padding: 0 0 0 0.5rem;
 }
-.close-btn-light {
+/*.close-btn-light {
   align: right;
   display: block;
   width: 50px;
@@ -134,7 +137,7 @@ select:hover {
   background-image: url('./imgs/iconmonstr-x-mark-7-light.svg');
   background-position: center;
   background-repeat: no-repeat;
-}
+}*/
 .list-item-btn:hover {
   outline: 1px solid #000;
 }
@@ -145,6 +148,8 @@ select:hover {
   margin: 5px auto;
   border: 1px solid #282B31;
   font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
 }
 .close-btn-dark {
   align: right;
@@ -218,12 +223,13 @@ select:hover {
   flex-grow: 1;
   margin: 1rem 0 0;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: flex-start;
   padding: 0 0 1rem 1rem;
 }
 .filter-button {
-  margin: 8px 0 0;
+  margin: 8px 8px 0;
   padding: 5px 10px;
   border: 1px solid #000;
 }
@@ -242,13 +248,14 @@ select:hover {
 }
 
 /* Media Queries */
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 650px) and (max-width: 849px) {
   .burger-place-info {
-    display: flex;
+    flex-direction: row;
   }
   .info-open-img {
     border-top: none;
     border-left: 1px solid #000;
+    max-height: 170px;
   }
   .list-view {
     width: 60%;
@@ -256,11 +263,8 @@ select:hover {
   .filters {
     width: 60%;
   }
-  .info-open-img {
-    max-height: 150px;
-  }
 }
-@media screen and (min-width: 850px) and (min-height: 700px) {
+@media screen and (min-width: 850px) {
   .list-view {
     position: absolute;
     background-color: #fff;
@@ -277,5 +281,25 @@ select:hover {
   }
   .burger-place-info {
     width: 75%;
+  }
+  .info-open-img {
+    max-height: 200px;
+  }
+}
+@media screen and (max-height: 380px) {
+  .list {
+    flex-direction: row;
+  }
+  .filter-options {
+    flex-direction: row;
+  }
+}
+  @media screen and (max-height: 450px) {
+  .burger-place-info {
+    flex-direction: row;
+  }
+  .info-open-img {
+    border-top: none;
+    border-left: 1px solid #000;
   }
 }
