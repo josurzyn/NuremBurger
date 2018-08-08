@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 class Filter extends Component {
   componentDidMount() {
+    // When filter view mounts, set focus in component at natural start order
     this.filterFocus.focus()
   }
 

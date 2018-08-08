@@ -30,19 +30,16 @@ class App extends Component {
     }
 
   setMap = (map) => {
-    console.log('I, setMap')
     this.setState({ map })
   }
 
   fetchFoursquareVenues = () => {
-    console.log('I, fetchFoursquareVenues')
     // Fetch recommended venues for 'burgers' using Foursquare Recommended Venues API call
     fetch('https://api.foursquare.com/v2/venues/explore?ll=49.452102,11.076665&query=burgers&limit=10&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
     .then((response) => response.json())
     .then((responseJson) => {
       // Get list of venues from response
       var venues = responseJson.response.groups[0].items
-      console.log(venues)
       var locations = []
       // Pull relevant venue information and create location from response
       for (var i = 0; i < venues.length; i++) {
@@ -70,17 +67,17 @@ class App extends Component {
     // Catch errors
     .catch((error) => {
       window.alert('Oh no! There was a problem loading the intial data for Nuremburger - ' + error + ' - Try reloading the page, or come visit us later.')
-      console.error(error);
+      console.log(error);
     })
   }
 
   // Populate additional location info using Foursquare Venue Details API call
   // TODO: Working function commented out to save premium api calls during development
-  populateLocationsInfo = () => {
+  /*populateLocationsInfo = () => {
     console.log('I, populateLocationsInfo', this.state.locations)
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
-      fetch('https://pi.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
@@ -152,13 +149,12 @@ class App extends Component {
         }
       })
     } // end of loop
-    console.log('locations info is ', locationsInfo)
     this.updateLocationsInfo(locationsInfo)
-  }
+  }*/
 
   // Temporary populate function using hardcoded data to enable easier filter testing
   // and save Foursquare premium API calls
-  /*populateLocationsInfo = () => {
+  populateLocationsInfo = () => {
     const locationsInfo = [
       {
           id: "5890c58a5289302f307ffd30",
@@ -278,7 +274,7 @@ class App extends Component {
         }
       ]
     this.updateLocationsInfo(locationsInfo)
-  }*/
+  }
 
   // Update locations with additional information and set new state,
   // then add onClick to each marker
@@ -288,7 +284,6 @@ class App extends Component {
 
   // Add makers to the map using initial locations state built from Foursquare API
   updateMarkers = (locations) => {
-    console.log('I, updateMarkers', this.state.locations)
     // Temp markers array to hold created markers
     let markers = []
     // Loop through locations to get and set data for each marker
@@ -347,7 +342,6 @@ class App extends Component {
 
   // Add event listeners to markers that selects the clicked on marker
   addMarkerClick = () => {
-    console.log('I, addMarkerClick')
     this.setState((prevState) => {
       for (let i = 0; i < prevState.markers.length; i++) {
         prevState.markers[i].addListener('click', () => {
@@ -397,11 +391,11 @@ class App extends Component {
 
   // Hide all markers
   hideMarkers = () => {
-    for (let i = 0; i < this.state.markers.length; i++) {
-      this.setState((prevState) => {
-        this.state.markers[i].setMap(null)
-      })
+    const markers = this.state.markers
+    for (let i = 0; i < markers.length; i++) {
+      markers[i].setMap(null)
     }
+    this.setState({ markers: markers })
   }
 
   // Show all markers
@@ -416,7 +410,6 @@ class App extends Component {
   // Open list view that will populate from markers state
   // and close any other open views
   openList = () => {
-    console.log('I, openList')
     this.setState({ showList: true })
     this.closeInfo()
     this.hideFilters()
@@ -424,7 +417,6 @@ class App extends Component {
 
   // Close list view if open
   closeList = () => {
-    console.log('I, closeList')
     if (this.state.showList) {
       this.setState({ showList: false })
     }
@@ -432,13 +424,11 @@ class App extends Component {
 
   // Open info for selected location
   openInfo = () => {
-    console.log('I, openInfo')
     this.setState({ showPlace: true })
   }
 
   // Close info for selected location, zoom out and recenter map
   closeInfo = () => {
-    console.log('I, closeInfo')
     this.recenterMap()
     if (this.state.showPlace) {
       this.setState({ showPlace: false })
@@ -447,7 +437,6 @@ class App extends Component {
 
   // Open filters and close other open views
   openFilters = () => {
-    console.log('I, openFilters')
     this.setState({ showFilters: true })
     this.closeList()
     this.closeInfo()
@@ -455,7 +444,6 @@ class App extends Component {
 
   // Hide filters
   hideFilters = () => {
-    console.log('I, hideFilters')
     if (this.state.showFilters) {
       this.setState({ showFilters: false })
     }

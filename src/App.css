@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:700');
 
 html, body, #root, #App {
-  font-family: 'Raleway', sans-sans-serif;
+  font-family: 'Raleway', sans-serif;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -129,15 +129,6 @@ select:hover {
   flex-grow: 1;
   padding: 0 0 0 0.5rem;
 }
-/*.close-btn-light {
-  align: right;
-  display: block;
-  width: 50px;
-  height: 50px;
-  background-image: url('./imgs/iconmonstr-x-mark-7-light.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-}*/
 .list-item-btn:hover {
   outline: 1px solid #000;
 }
@@ -281,9 +272,12 @@ select:hover {
   }
   .burger-place-info {
     width: 75%;
+    flex-direction: row;
   }
   .info-open-img {
     max-height: 200px;
+    border-top: none;
+    border-left: 1px solid #000;
   }
 }
 @media screen and (max-height: 380px) {
@@ -294,7 +288,7 @@ select:hover {
     flex-direction: row;
   }
 }
-  @media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
   .burger-place-info {
     flex-direction: row;
   }

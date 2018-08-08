@@ -11,7 +11,6 @@ class BurgerPlaceInfo extends Component {
     const { burgerPlace } = this.props
 
     return(
-
       <div className="burger-place-info">
         {burgerPlace ?
           <div className="info-open">

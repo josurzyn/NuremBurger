@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 
+// Method of loading Google Maps in React researched and implemented with the help of
+// Klass Not Found - https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
+
 class Map extends Component {
   state = {
     mapLoadFailed: false
@@ -8,21 +11,20 @@ class Map extends Component {
   // Load Google Maps API and add to DOM
   loadScript = (src) => {
     if (!window.google) {
-      console.log('loading script!')
       var script = document.createElement('script')
       script.src = src
       var node = window.document.getElementsByTagName("script")[0]
       node.parentNode.insertBefore(script, node)
       // listen for successful map load - might need to do something else here
       script.addEventListener('load', function() {
-        console.log('map loaded')
       })
       // alert user if there's an error loading the map
-      script.addEventListener('error', (e) => {
+      script.addEventListener('error', (error) => {
         this.setState({
           mapLoadFailed: true,
           showOptions: false
          })
+         console.log(error)
       })
     }
   }
@@ -36,7 +38,6 @@ class Map extends Component {
 
   // Initialise the map
   initMap = () => {
-    console.log('initialise map!')
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 49.452102, lng: 11.076665},
       //styles: styles,
@@ -45,10 +46,8 @@ class Map extends Component {
     });
     // make map available throughout app
     this.props.setMap(map)
-    console.log('calling setMap')
-    // fetch burger places from foursquare
+    // fetch burger places from Foursquare
     this.props.fetchLocations()
-    console.log('fetching locations')
   }
 
   render() {
