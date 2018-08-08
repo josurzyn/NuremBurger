@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 
-// Method of loading Google Maps in React researched and implemented with the help of
-// Klass Not Found - https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
+/* Method of loading Google Maps in React researched and implemented with the help of
+ * Klass Not Found - https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
+ */
 
 class Map extends Component {
   state = {

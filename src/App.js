@@ -60,8 +60,10 @@ class App extends Component {
         // Add location to temp array
         locations.push(location);
       }
-      // Set location state with new locations array built from Foursquare API,
-      // then create set markers for all locations
+      /**
+       * Set location state with new locations array built from Foursquare API,
+       * then create set markers for all locations
+       */
       this.setState({ locations: locations }, () => {this.updateMarkers(this.state.locations)})
     })
     // Catch errors
@@ -72,9 +74,7 @@ class App extends Component {
   }
 
   // Populate additional location info using Foursquare Venue Details API call
-  // TODO: Working function commented out to save premium api calls during development
-  /*populateLocationsInfo = () => {
-    console.log('I, populateLocationsInfo', this.state.locations)
+  populateLocationsInfo = () => {
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
       fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
@@ -82,7 +82,6 @@ class App extends Component {
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
           const venue = responseJson.response.venue
-          console.log('I just fetched some venue details', responseJson)
           let location = {}
           if (venue.id) {
             location.id = venue.id
@@ -150,134 +149,11 @@ class App extends Component {
       })
     } // end of loop
     this.updateLocationsInfo(locationsInfo)
-  }*/
-
-  // Temporary populate function using hardcoded data to enable easier filter testing
-  // and save Foursquare premium API calls
-  populateLocationsInfo = () => {
-    const locationsInfo = [
-      {
-          id: "5890c58a5289302f307ffd30",
-          name: "Mam-Mam Burger",
-          phone: "No phone number provided",
-          photo: "https://igx.4sqi.net/img/general/width300/14971791_Xw6BkyF1e-LDSTwN_9Anz0e60UJ3pSzv3qBXK9unrjk.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 4,
-          url: null
-      }, {
-          address: "Tetzelgasse 21",
-          id: "541d576b498e5af29579e6d7",
-          name: "Mam-Mam Burger",
-          openStatus: "Closed until Noon",
-          phone: "+49 911 48980268",
-          photo: "https://igx.4sqi.net/img/general/width300/8526719_uBtiZ9fUCtRplXVn5dnWRKY-QwVi4d0n3HU5oPR7Jd0.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 7.2,
-          url: "http://www.mammamburger.de"
-      }, {
-          address: "Gostenhofer Hauptstr. 58",
-          id: "53dbdcf3498e8a2753042033",
-          name: "Hempels",
-          openStatus: "Closed until Noon",
-          phone: "+49 1577 9577402",
-          photo: "https://igx.4sqi.net/img/general/width300/43607817_Bkish9Hcq9kFaZ5rg2cK47v8rHieF6lx65EDW350JEc.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 8.1,
-          url: "http://www.hempelsburger.de"
-      }, {
-          address: "Hauptmarkt 10",
-          id: "4b530d76f964a520978d27e3",
-          name: "ALEX",
-          isOpen: true,
-          openStatus: "Open until 3:00 AM",
-          phone: "+49 911 2446980",
-          photo: "https://igx.4sqi.net/img/general/width300/722715_xtKvSZnMGxXWz9hJRpVBnJTN4UBZnf-7KefS8DQX71c.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 7.8,
-          url: "http://www.dein-alex.de"
-      }, {
-          address: "Rosental 1",
-          id: "4ff8b5fde4b021ccc849c2c9",
-          name: "Zum Beckschlager",
-          openStatus: "Closed until 5:00 PM",
-          phone: "+49 911 92376663",
-          photo: "https://igx.4sqi.net/img/general/width300/13476333_Q9gzEI3L5_ldUcsdqTxdKiD1jgckUj4-jPX-vp0VC-s.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 9,
-          url: "http://www.beckschlager.org"
-        }, {
-          address: "Weintraubengasse 2",
-          id: "5491db47498e54e8b2dcf4e3",
-          name: "Kuhmuhne",
-          openStatus: "Closed until Noon",
-          phone: "+49 911 66489798",
-          photo: "https://igx.4sqi.net/img/general/width300/93567_hueONj1mQqSKJKgrS_3OqTINilDNNvcYibVlnrCpclQ.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 8.8,
-          url: "http://www.kuhmuhne-nuernberg.de"
-
-        }, {
-          address: "Löbleinstr. 50",
-          id: "51f413f1498e3ba36cf8e168",
-          name: "Die Superbude",
-          openStatus: "Closed until 5:00 PM",
-          phone: "+49 1515 1407512",
-          photo: "https://igx.4sqi.net/img/general/width300/2021433_svyv9PIpKLZGxt67RlitN-_7EQk883WRO2HrZWVj2iE.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 5,
-          url: "http://www.funkybuns.de"
-
-        }, {
-          address: "Königstr. 74",
-          id: "51797373e4b022af595cc5ae",
-          name: "Hans im Glück - Burgergrill",
-          openStatus: "Closed until Noon",
-          phone: "+49 911 99283661",
-          photo: "https://igx.4sqi.net/img/general/width300/3434551_w5SvkYcYtbjchYPZpsn1hVoAStfwW4J8Whj__H8w3Mg.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 8.2,
-          url: "http://nuernberg.hansimglueck-burgergrill.de"
-
-        }, {
-          address: "Obstmarkt 5",
-          id: "558d9a3e498e78f16ae5a7d7",
-          name: "Five Diner",
-          isOpen: true,
-          openStatus: "Open until 2:00 AM",
-          phone: "+49 911 223375",
-          photo: "https://igx.4sqi.net/img/general/width300/54674926_3Ra8LoaR4jjC6ccPSRAh1uFxlkPBjijqyGjCmYP-d90.jpg",
-          price: "€",
-          priceTier: 1,
-          rating: 6,
-          url: "http://www.fivediner.de"
-
-        }, {
-          address: "Beckschlagergasse 6",
-          id: "4b9bb4e7f964a520161c36e3",
-          name: "Chong's Diner",
-          openStatus: "Closed until 11:00 AM",
-          phone: "+49 911 2349997",
-          photo: "https://igx.4sqi.net/img/general/width300/31226522_5hEdDIHRgwnYmN9nKzkUfxrwbC1nOZRDrcmwBPGhR5g.jpg",
-          price: "€€",
-          priceTier: 2,
-          rating: 7.2,
-          url: "http://www.chongs-diner.de"
-
-        }
-      ]
-    this.updateLocationsInfo(locationsInfo)
   }
 
-  // Update locations with additional information and set new state,
-  // then add onClick to each marker
+  /* Update locations with additional information and set new state,
+   * then add onClick to each marker
+   */
   updateLocationsInfo = (locationsInfo) => {
       this.setState({ locations: locationsInfo }, () => {this.addMarkerClick()})
   }
@@ -300,45 +176,13 @@ class App extends Component {
         id: id,
         map: this.state.map
       });
-      // create onclick event to open infowindow at marker
-    //  marker.addListener('click', () =>
-    //    this.populateInfo(this.state.markers[i])
-    //  );
-      // push marker to array
-      // Add bounce to marker on click - with help from Google API docs
-      // and a tip from Mikael on Stack Overflow -
-      // https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once/7832086
       markers.push(marker);
-      /*marker.addListener('click', () => {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null)
-        } else {
-          marker.setAnimation(4)
-        }
-      })*/
     }
-    // Set markers state from temp markers array,
-    // then go on to fetch additional location information
+    /* Set markers state from temp markers array,
+     * then go on to fetch additional location information
+     */
     this.setState({ markers: markers }, () => this.populateLocationsInfo())
   }
-  // TODO: code block originally from maps lessons -
-  // sets bounds of map based on markers
-  //let bounds = new window.google.maps.LatLngBounds();
-  //console.log('bounds ', bounds)
-  // extend map boundaries for each marker and display marker
-//  for (let i = 0; i < this.state.markers.length; i++) {
-  //  this.state.markers[i].setMap(this.state.map);
-    //bounds.extend(this.state.markers[i].position);
-  //}
-  //this.state.map.fitBounds(bounds);
-
-  /*markerBounce = () => {
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null)
-    } else {
-      marker.setAnimation(window.google.maps.Animation.BOUNCE)
-    }
-  }*/
 
   // Add event listeners to markers that selects the clicked on marker
   addMarkerClick = () => {
@@ -355,9 +199,10 @@ class App extends Component {
   selectLocation = (marker) => {
     // match marker with full location and set selected location
     const selectedLocation = this.state.locations.find(loc => marker.id === loc.id)
-    // Animate marker on selection - with help from Google API docs
-    // and a tip from Mikael on Stack Overflow -
-    // https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once/7832086
+    /* Animate marker on selection - with help from Google API docs
+     * and a tip from Mikael on Stack Overflow -
+     * https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once/7832086
+     */
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null)
     } else {
@@ -425,8 +270,9 @@ class App extends Component {
     }
   }
 
-  // Open list view that will populate from markers state
-  // and close any other open views
+  /* Open list view that will populate from markers state
+   * and close any other open views
+   */
   openList = () => {
     this.setState({ showList: true })
     this.closeInfo()
@@ -543,9 +389,10 @@ class App extends Component {
         }
       }
     } else {
-      // If value is other than "clear", Loop through markers and check for match
-      // against price tier, as well as other currently selected filters and show matches
-      // that satisfy all current filters
+      /* If value is other than "clear", Loop through markers and check for match
+       * against price tier, as well as other currently selected filters and show matches
+       * that satisfy all current filters
+       */
       for (let i = 0; i < currentMarkers.length; i++) {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
         if (loc.priceTier.toString() !== price) {
@@ -597,9 +444,10 @@ class App extends Component {
         }
       }
     } else {
-      // If value is other than "clear", Loop through markers and check for match
-      // against rating, as well as other currently selected filters and show matches
-      // that satisfy all current filters
+      /* If value is other than "clear", Loop through markers and check for match
+       * against rating, as well as other currently selected filters and show matches
+       * that satisfy all current filters
+       */
       for (let i = 0; i < currentMarkers.length; i++) {
         const loc = locs.find(l => l.id === currentMarkers[i].id)
         if (loc.rating < rating) {
@@ -625,8 +473,9 @@ class App extends Component {
     }
   }
 
-  // Reset map and markers to original states, closing all other views
-  // and clearing all filters
+  /* Reset map and markers to original states, closing all other views
+   * and clearing all filters
+   */
   resetMap = () => {
     if (this.state.showList) {
     this.closeList()
