@@ -405,6 +405,24 @@ class App extends Component {
       markers[i].setMap(this.state.map)
     }
     this.setState({ markers: markers })
+    // Clear any filters in place
+    if (this.state.openFilter) {
+      this.clearOpenFilter()
+    }
+    if (this.state.priceFilter.applied) {
+      this.setState({ priceFilter: {
+        applied: false,
+        select: "none"
+      }
+    })
+    }
+    if (this.state.ratingFilter.applied) {
+      this.setState({ ratingFilter: {
+          applied: false,
+          select: "none"
+        }
+      })
+    }
   }
 
   // Open list view that will populate from markers state
