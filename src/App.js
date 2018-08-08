@@ -25,7 +25,8 @@ class App extends Component {
           applied: false,
           select: "none"
         },
-      showOptions: true
+      showOptions: true,
+      showFilterOptions: true
     }
 
   setMap = (map) => {
@@ -79,15 +80,13 @@ class App extends Component {
     console.log('I, populateLocationsInfo', this.state.locations)
     const locationsInfo = []
     for (let i = 0; i < this.state.locations.length; i++) {
-      fetch('https://api.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
+      fetch('https://pi.foursquare.com/v2/venues/' + this.state.locations[i].id + '?&client_id=FO1J3EFVMOXJGRR2AFBHABINFZXXD2MOZXUZ4VA5RUKI0IFC&client_secret=VWWOO2BDCQ0FBY5JA1RMSFFRAJN1IDWOA4G0PGT0300EFCVW&v=20180731')
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.meta.code === 200) {
           const venue = responseJson.response.venue
           console.log('I just fetched some venue details', responseJson)
-          //console.log('this venue is ', venue, this.state.locations[i])
           let location = {}
-          //console.log('the initial location is ', location)
           if (venue.id) {
             location.id = venue.id
           }
@@ -148,16 +147,13 @@ class App extends Component {
       // catch errors with request
       .catch((error) => {
         if (i === 0) {
-          window.alert('Oh no! There was a problem loading additional data about our locations - ' + error + ' - Try reloading the page, come visit us later, or find your way to a marker and see!')
-          this.setState({ showOptions: false })
+          window.alert('Oh no! There was a problem loading additional data about our locations - ' + error + ' - Try reloading the page, come visit us later, or take this map out and explore!')
+          this.setState({ showFilterOptions: false })
         }
       })
     } // end of loop
-    // Check fetching additional data was successful before continuing
-    if (locationsInfo.length) {
-      console.log('there are locations!')
-      this.updateLocationsInfo(locationsInfo)
-    }
+    console.log('locations info is ', locationsInfo)
+    this.updateLocationsInfo(locationsInfo)
   }
 
   // Temporary populate function using hardcoded data to enable easier filter testing
@@ -698,6 +694,7 @@ class App extends Component {
             handleListOpen={this.openList}
             handleFiltersOpen={this.openFilters}
             handleReset={this.resetMap}
+            showFilterOptions={this.state.showFilterOptions}
           />
         }
       </div>

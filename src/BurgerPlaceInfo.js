@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 class BurgerPlaceInfo extends Component {
   componentDidMount() {
-    this.infoFocus.focus()
+    if (this.props.burgerPlace) {
+      this.infoFocus.focus()
+    }
   }
 
   render() {
@@ -11,6 +13,7 @@ class BurgerPlaceInfo extends Component {
     return(
 
       <div className="burger-place-info">
+        {burgerPlace ?
           <div className="info-open">
             <button className="close-btn-dark close-place-info" onClick={this.props.handleInfoClose} aria-label="Close location information" ref={(infoFocus) => { this.infoFocus = infoFocus }}></button>
             <div className="details-container">
@@ -26,9 +29,14 @@ class BurgerPlaceInfo extends Component {
               <p className="rating">{burgerPlace.rating}/10</p>
             </div>
           </div>
+          : <p>Due to an API error, we don't have any additional details. Why not take a trip there and see?</p>
+        }
+        {burgerPlace && burgerPlace.photo ?
           <div className="info-open-img">
             <img className="place-best-img" src={burgerPlace.photo} alt={burgerPlace.name + " burger restaurant"}/>
           </div>
+        : <p>No photo available.</p>
+        }
       </div>
     )
   }
