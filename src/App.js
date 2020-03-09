@@ -48,7 +48,7 @@ class App extends Component {
         const address = venues[i].venue.location.address;
         const lat = venues[i].venue.location.lat;
         const lng = venues[i].venue.location.lng;
-          const location = {
+        const location = {
           name: name,
           id: id,
           address: address,
@@ -101,6 +101,9 @@ class App extends Component {
             }
             location.priceTier = venue.price.tier
             location.price = price
+          } else {
+            location.priceTier = 'Price unknown'
+            location.price = 'Price unknown'
           }
           if (venue.contact && venue.contact.formattedPhone) {
             location.phone = venue.contact.formattedPhone
